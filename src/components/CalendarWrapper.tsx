@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useCallback, useState } from "react";
+import { JSX, useCallback, useState, useEffect } from "react";
 
 import { startOfWeek, format, parse, getDay } from "date-fns";
 import { es } from "date-fns/locale/es";
@@ -39,6 +39,35 @@ const localizer = dateFnsLocalizer({
   },
 });
 
+const customFormats = {
+  // Month view
+  monthHeaderFormat: (date: Date) =>
+    format(date, "MMMM 'de' yyyy", { locale: es }),
+  weekdayFormat: (date: Date) => format(date, "EEEE", { locale: es }),
+  dateFormat: (date: Date) => format(date, "dd", { locale: es }),
+
+  // Week views
+  dayRangeHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
+    `${format(start, "dd 'de' MMMM", { locale: es })} - ${format(
+      end,
+      "dd 'de' MMMM",
+      { locale: es }
+    )}`,
+  dayFormat: (date: Date) => format(date, "EEEE dd", { locale: es }),
+
+  // Day view
+  dayHeaderFormat: (date: Date) =>
+    format(date, "EEEE dd 'de' MMMM", { locale: es }),
+
+  // Agenda view
+  agendaHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
+    `${format(start, "dd 'de' MMMM 'de' yyyy", { locale: es })} - ${format(
+      end,
+      "dd 'de' MMMM 'de' yyyy",
+      { locale: es }
+    )}`,
+};
+
 const messages = {
   allDay: "Todo el día",
   previous: "Anterior",
@@ -65,6 +94,20 @@ export default function CalendarWrapper(): JSX.Element {
     useState<Appointment[]>(mockAppointments);
   const [view, setView] = useState<View>(Views.WEEK);
   const [date, setDate] = useState<Date>(new Date());
+
+  useEffect(() => {
+    const setInitialView = (): void => {
+      const isMobile = window.innerWidth < 768;
+      setView(isMobile ? Views.DAY : Views.WEEK);
+    };
+
+    setInitialView();
+    window.addEventListener("resize", setInitialView);
+
+    return () => {
+      window.removeEventListener("resize", setInitialView);
+    };
+  }, []);
 
   const handleSelectSlot = useCallback((slotInfo: SlotInfo): void => {
     const roundedStart = roundToNearestFiveMinutes(new Date(slotInfo.start));
@@ -178,7 +221,7 @@ export default function CalendarWrapper(): JSX.Element {
         min={new Date(0, 0, 0, 9, 0, 0)}
         max={new Date(0, 0, 0, 19, 0, 0)}
         culture="es"
-        defaultView={Views.WEEK}
+        formats={customFormats}
         views={["month", "week", "day", "agenda"]}
         messages={messages}
         onEventDrop={handleEventDrop}
