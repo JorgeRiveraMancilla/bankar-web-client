@@ -16,6 +16,7 @@ import withDragAndDrop, {
 } from "react-big-calendar/lib/addons/dragAndDrop";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
+import "@/styles/calendar.css";
 
 import { appointments as mockAppointments } from "@/data/mockData";
 import {

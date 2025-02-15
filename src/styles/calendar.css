@@ -1,0 +1,50 @@
+/* Contenedor de los botones de navegación */
+.rbc-toolbar {
+  @apply flex flex-wrap items-center justify-center gap-2 mb-4;
+}
+
+/* Grupo de botones de navegación */
+.rbc-btn-group {
+  @apply inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground;
+}
+
+/* Reset de estilos base de los botones */
+.rbc-toolbar button {
+  @apply bg-transparent border-0 p-0;
+}
+
+/* Botones individuales */
+.rbc-btn-group button {
+  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0;
+}
+
+/* Mantener el radio en los botones, independientemente de su posición */
+.rbc-btn-group > button:first-child:not(:last-child),
+.rbc-btn-group > button:not(:first-child):not(:last-child),
+.rbc-btn-group > button:last-child:not(:first-child) {
+  @apply rounded-md border-0;
+}
+
+/* Sobreescribir todos los estados del botón */
+.rbc-btn-group button,
+.rbc-btn-group button:hover,
+.rbc-btn-group button:active,
+.rbc-btn-group button:focus {
+  @apply bg-transparent;
+}
+
+/* Botón activo */
+.rbc-btn-group button.rbc-active {
+  @apply bg-background text-foreground shadow border-0;
+}
+
+/* Mantener el estado activo sin cambios en hover */
+.rbc-btn-group button.rbc-active:hover,
+.rbc-btn-group button.rbc-active:focus {
+  @apply bg-background text-foreground shadow;
+}
+
+/* Selector de vista (Mes, Semana, Día, Agenda) */
+.rbc-toolbar-label {
+  @apply text-lg font-semibold mx-4;
+}
