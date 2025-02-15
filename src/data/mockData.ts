@@ -28,11 +28,10 @@ export const appointments: Appointment[] = [
   {
     id: "1",
     title: "Corte - María González",
-    start: new Date(2024, 1, 13, 10, 0),
-    end: new Date(2024, 1, 13, 10, 30),
+    start: new Date(2025, 1, 13, 10, 0),
+    end: new Date(2025, 1, 13, 10, 30),
     stylistId: "1",
     clientId: "1",
     serviceId: "1",
   },
-  // Puedes agregar más citas aquí
 ];
