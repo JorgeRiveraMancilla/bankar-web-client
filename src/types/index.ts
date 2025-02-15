@@ -81,6 +81,7 @@ export interface DragAndDropCalendarProps {
 }
 
 export type DateAccessor = string | ((event: Appointment) => Date);
+
 export type EventPropGetter = (
   event: Appointment,
   start: Date,

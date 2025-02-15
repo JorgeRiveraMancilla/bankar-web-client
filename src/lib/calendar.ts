@@ -1,25 +1,20 @@
-import { addMinutes, setMinutes, setSeconds, setMilliseconds } from "date-fns";
+import { setMinutes } from "date-fns";
 
 import { Appointment } from "@/types";
 
-// Colores para los estilistas
 export const stylistColors: Record<
   string,
   { background: string; text: string }
 > = {
-  "1": { background: "#dbeafe", text: "#1e40af" }, // azul
-  "2": { background: "#dcfce7", text: "#166534" }, // verde
-  "3": { background: "#f3e8ff", text: "#6b21a8" }, // morado
+  "1": { background: "#dbeafe", text: "#1e40af" },
+  "2": { background: "#dcfce7", text: "#166534" },
+  "3": { background: "#f3e8ff", text: "#6b21a8" },
 };
 
 export const roundToNearestFiveMinutes = (date: Date): Date => {
   const minutes = date.getMinutes();
   const roundedMinutes = Math.round(minutes / 5) * 5;
   return setMinutes(date, roundedMinutes);
-};
-
-export const getInitialTimeSlot = (date: Date): Date => {
-  return setMilliseconds(setSeconds(date, 0), 0);
 };
 
 export const checkAppointmentOverlap = (
@@ -51,14 +46,4 @@ export const getAppointmentStyle = (
       borderRadius: "4px",
     },
   };
-};
-
-export const MIN_APPOINTMENT_DURATION = 5; // minutos
-export const DRAG_SNAP_DURATION = 5; // minutos
-
-export const getValidResizeTime = (newTime: Date, originalTime: Date): Date => {
-  const timeDiff = Math.abs(newTime.getTime() - originalTime.getTime());
-  const minutesDiff = Math.round(timeDiff / (1000 * 60));
-  const roundedMinutes = Math.round(minutesDiff / 5) * 5;
-  return addMinutes(originalTime, roundedMinutes);
 };
