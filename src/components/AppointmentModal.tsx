@@ -41,13 +41,13 @@ interface FormData {
   minute: string;
 }
 
-export function AppointmentModal({
+export const AppointmentModal = ({
   isOpen,
   onClose,
   selectedDate,
   onSubmit,
   appointment,
-}: Props): JSX.Element | null {
+}: Props): JSX.Element | null => {
   const [formData, setFormData] = useState<FormData>({
     stylistId: "",
     clientId: "",
@@ -148,8 +148,8 @@ export function AppointmentModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
+      <DialogContent className="sm:max-w-[425px] md:h-auto h-screen w-full md:w-auto p-0 md:p-6 overflow-y-auto">
+        <DialogHeader className="sticky top-0 bg-background p-4 md:p-0 md:pb-4 z-10 border-b md:border-none">
           <DialogTitle>
             {appointment ? "Editar Cita" : "Nueva Cita"}
           </DialogTitle>
@@ -157,7 +157,8 @@ export function AppointmentModal({
             Completa los detalles de la cita. Los campos con * son obligatorios.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+
+        <div className="grid gap-4 p-4 md:p-0 flex-1">
           <div className="grid gap-2">
             <Label>Fecha *</Label>
             <Calendar
@@ -278,10 +279,13 @@ export function AppointmentModal({
               </SelectContent>
             </Select>
           </div>
+        </div>
 
-          {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
-
-          <div className="flex justify-end gap-2 pt-4">
+        <div className="sticky bottom-0 bg-background p-4 md:p-0 md:pt-4 border-t">
+          {error && (
+            <p className="text-sm text-red-500 font-medium mb-4">{error}</p>
+          )}
+          <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={onClose} type="button">
               Cancelar
             </Button>
@@ -293,6 +297,4 @@ export function AppointmentModal({
       </DialogContent>
     </Dialog>
   );
-}
-
-export default AppointmentModal;
+};
