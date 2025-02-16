@@ -252,7 +252,6 @@ export default function CalendarWrapper(): JSX.Element {
   return (
     <>
       <DragAndDropCalendar
-        style={{ height: "calc(100vh - 8rem)" }}
         localizer={localizer}
         events={appointments}
         startAccessor="start"

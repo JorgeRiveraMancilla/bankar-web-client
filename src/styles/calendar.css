@@ -1,6 +1,6 @@
-/* Base Calendar Container */
+/*#region Base Calendar*/
 .rbc-calendar {
-  @apply text-foreground overflow-hidden;
+  @apply text-foreground h-full min-h-screen;
 }
 
 .rbc-calendar *,
@@ -8,57 +8,15 @@
 .rbc-calendar *:after {
   @apply border-0;
 }
+/*#endregion*/
 
-/* Header Styles */
-.rbc-header {
-  @apply p-2 font-medium border-r-0;
+/*#region Common Elements*/
+.rbc-button-link {
+  @apply appearance-none bg-transparent border-0 m-0 p-0 cursor-pointer text-inherit;
 }
 
-.rbc-header + .rbc-header {
-  @apply border-r-0;
-}
-
-.rbc-time-header.rbc-overflowing {
-  @apply border-0 m-0 hidden;
-}
-
-.rbc-time-header-content {
-  @apply border-l border-border;
-}
-
-.rbc-time-header-content .rbc-header:last-child {
-  @apply border-r-0;
-}
-
-/* Time Content and Slots */
-.rbc-time-content {
-  @apply overflow-y-auto border-0;
-  height: calc(100% - 70px);
-}
-
-.rbc-time-content > * + * {
-  @apply border-l border-border;
-}
-
-.rbc-timeslot-group {
-  @apply min-h-[100px] flex flex-col border-b border-border/40;
-}
-
-.rbc-time-slot {
-  @apply flex-1;
-}
-
-.rbc-time-column {
-  @apply min-h-[100px] relative;
-}
-
-.rbc-label {
-  @apply px-2 py-1 text-sm text-muted-foreground;
-}
-
-/* Event Styles */
 .rbc-event {
-  @apply bg-transparent text-foreground rounded shadow-sm cursor-pointer px-2 py-1 text-sm border border-border;
+  @apply bg-transparent text-foreground rounded shadow-sm cursor-pointer px-2 py-1 text-sm border-0;
 }
 
 .rbc-event-label {
@@ -66,119 +24,154 @@
 }
 
 .rbc-event-content {
-  @apply text-sm overflow-hidden text-ellipsis;
+  @apply text-sm text-ellipsis;
 }
 
 .rbc-selected {
   @apply bg-accent/5;
 }
 
-/* Today and Current Time Styles */
-.rbc-today,
-.rbc-day-bg.rbc-today {
-  @apply bg-transparent;
+.rbc-label {
+  @apply px-2 py-1 text-sm text-muted-foreground;
+}
+/*#endregion*/
+
+/*#region Header*/
+.rbc-header {
+  @apply p-2 font-medium border-0 border-l border-border h-[30px] flex justify-center items-center;
+}
+
+.rbc-header + .rbc-header {
+  @apply border-0 border-l border-border;
+}
+
+.rbc-time-header.rbc-overflowing {
+  @apply border-0 m-0;
+}
+
+.rbc-time-header-content {
+  @apply border-0;
+}
+
+.rbc-time-header-content .rbc-header:last-child {
+  @apply border-0 border-l border-border !important;
+}
+/*#endregion*/
+
+/*#region Time View and Content*/
+.rbc-time-view {
+  @apply h-[100px] border border-border rounded-lg;
+}
+
+.rbc-time-view .rbc-time-header.rbc-overflowing {
+  @apply mr-0;
+}
+
+.rbc-time-content {
+  @apply overflow-y-auto border-0;
+  height: calc(100% - 70px);
+}
+
+.rbc-time-content > * + * {
+  @apply border-0;
+}
+
+.rbc-time-content > .rbc-day-slot {
+  @apply border-l border-border;
+}
+
+.rbc-time-column {
+  @apply min-h-[100px];
+}
+
+.rbc-time-column .rbc-timeslot-group {
+  @apply border-t border-border;
+}
+
+.rbc-timeslot-group {
+  @apply min-h-[100px] flex flex-col border-0;
+}
+
+.rbc-time-slot {
+  @apply flex-1;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  @apply border-t border-border/50;
+}
+
+.rbc-day-slot .rbc-time-slot:first-child {
+  @apply border-0;
 }
 
 .rbc-current-time-indicator {
   @apply bg-primary h-[2px] z-[3];
 }
+/*#endregion*/
 
-/* Month View */
+/*#region Month View*/
 .rbc-month-view {
-  @apply border border-border h-full;
-  min-height: inherit;
-}
-
-.rbc-month-row {
-  @apply border-0 flex-1;
-  min-height: 100px;
+  @apply border border-border rounded-lg overflow-hidden;
+  height: 900px !important;
 }
 
 .rbc-month-header {
-  @apply border-b border-border;
+  @apply flex border-0 h-[30px] justify-center items-center;
 }
 
-/* Time View (Week and Day) */
-.rbc-time-view {
-  @apply border border-border h-full !important;
+.rbc-month-row {
+  @apply border-t border-border;
+  height: 150px !important;
+  position: relative !important;
 }
 
-.rbc-time-view .rbc-time-header.rbc-overflowing {
-  @apply hidden;
-  margin-right: 0 !important;
+.rbc-month-row:last-child {
+  &:has(.rbc-date-cell:not(.rbc-off-range-bg):only-child) {
+    display: none;
+  }
+
+  &[data-single-day="true"] {
+    display: none;
+  }
 }
 
-/* Agenda View */
-.rbc-agenda-view {
-  @apply border border-border flex flex-col;
-  min-height: calc(100vh - 12rem);
-  overflow: visible !important;
-}
-
-.rbc-agenda-content {
-  @apply flex-1;
-  min-height: calc(100vh - 12rem);
-  overflow: visible !important;
-}
-
-.rbc-agenda-empty {
-  @apply p-4 text-center text-muted-foreground flex items-center justify-center;
-  min-height: calc(100vh - 12rem);
-}
-
-.rbc-agenda-table {
-  @apply w-full flex-1;
-  overflow: visible !important;
-}
-
-.rbc-agenda-view table.rbc-agenda-table {
+.rbc-month-view .rbc-header:first-child {
   @apply border-0;
 }
+/*#endregion*/
 
-.rbc-agenda-view .rbc-agenda-table-scroll {
-  overflow: visible !important;
-}
-
-.rbc-agenda-date-cell,
-.rbc-agenda-time-cell {
-  @apply p-2 border-r border-border;
-}
-
-.rbc-agenda-event-cell {
-  @apply p-2;
-}
-
-/* Background Elements */
+/*#region Background Elements*/
 .rbc-row-bg {
-  @apply absolute inset-0 flex;
+  @apply inset-0 flex;
 }
 
 .rbc-day-bg {
-  @apply flex-1;
+  @apply border-l border-border;
+}
+
+.rbc-row-bg .rbc-day-bg:first-child {
+  @apply border-0;
 }
 
 .rbc-day-bg + .rbc-day-bg {
-  @apply border-0;
+  @apply border-l border-border;
+}
+
+.rbc-today,
+.rbc-day-bg.rbc-today {
+  @apply bg-transparent;
 }
 
 .rbc-off-range {
   @apply text-muted-foreground/60;
 }
 
-/* Row Content */
-.rbc-row {
-  @apply flex;
-}
-
 .rbc-row-segment {
   @apply flex-1;
 }
+/*#endregion*/
 
-.rbc-button-link {
-  @apply appearance-none bg-transparent border-0 m-0 p-0 cursor-pointer text-inherit;
-}
-
-/* Toolbar */
+/*#region Toolbar*/
 .rbc-toolbar {
   @apply flex items-center justify-between gap-2 mb-2;
 }
@@ -197,26 +190,86 @@
 .rbc-toolbar-label {
   @apply text-lg font-semibold mx-4;
 }
+/*#endregion*/
 
-/* Drag and Drop Functionality */
+/*#region Agenda View*/
+.rbc-agenda-view {
+  @apply border border-border rounded-lg flex flex-col;
+  min-height: calc(100vh - 12rem);
+  overflow: auto !important;
+}
+
+.rbc-agenda-content {
+  @apply flex-1;
+}
+
+.rbc-agenda-empty {
+  @apply p-4 text-center text-muted-foreground flex items-center justify-center;
+  min-height: calc(100vh - 12rem);
+}
+
+.rbc-agenda-table {
+  @apply w-full border-separate border-spacing-0;
+}
+
+.rbc-agenda-view table.rbc-agenda-table {
+  @apply w-full table-fixed;
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead .rbc-header {
+  @apply bg-background border-b border-border p-3 text-left font-medium;
+  width: auto !important;
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead .rbc-header:first-child {
+  @apply w-[150px];
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead .rbc-header:nth-child(2) {
+  @apply w-[150px];
+}
+
+.rbc-agenda-date-cell,
+.rbc-agenda-time-cell {
+  @apply p-3 align-middle text-sm;
+  width: 150px;
+}
+
+.rbc-agenda-event-cell {
+  @apply p-3 align-middle text-sm;
+}
+
+.rbc-agenda-view .rbc-agenda-table tbody tr {
+  @apply transition-colors bg-blue-50 text-blue-800;
+}
+
+.rbc-agenda-view .rbc-agenda-table tbody tr[style*="background-color"] {
+  background-color: transparent !important;
+  color: inherit !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.rbc-agenda-view .rbc-agenda-table tbody tr:hover {
+  @apply bg-accent/5;
+}
+/*#endregion*/
+
+/*#region Drag and Drop*/
 .rbc-allday-cell {
   @apply hidden;
 }
 
-.rbc-addons-dnd .rbc-addons-dnd-row-body {
-  @apply relative;
-}
-
 .rbc-addons-dnd .rbc-addons-dnd-drag-preview {
-  @apply absolute shadow-lg pointer-events-none z-50;
+  @apply shadow-lg pointer-events-none z-50;
 }
 
 .rbc-addons-dnd-resizable {
-  @apply w-full h-full relative;
+  @apply w-full h-full;
 }
 
 .rbc-addons-dnd-resize-ns-anchor {
-  @apply cursor-ns-resize h-1 w-full absolute left-0;
+  @apply cursor-ns-resize h-1 w-full left-0;
 }
 
 .rbc-addons-dnd-resize-ns-anchor:first-child {
@@ -230,8 +283,9 @@
 .rbc-addons-dnd-resize-ns-icon {
   @apply h-full w-full bg-transparent;
 }
+/*#endregion*/
 
-/* Responsive Adjustments */
+/*#region Responsive*/
 @media (max-width: 768px) {
   .rbc-toolbar {
     @apply flex-col gap-2;
@@ -241,3 +295,4 @@
     @apply text-center;
   }
 }
+/*#endregion*/
