@@ -8,36 +8,51 @@
 }
 
 .rbc-calendar {
-  @apply bg-background text-foreground rounded-lg overflow-hidden;
+  @apply text-foreground rounded-lg overflow-hidden;
 }
 
-/* Header Styles
+/* Header and Time Header Styles
       ========================================================================== */
-.rbc-time-header {
-  @apply bg-card;
-}
-
-.rbc-time-header-content,
-.rbc-header + .rbc-header {
-  @apply border-0;
-}
-
 .rbc-header {
-  @apply p-2 font-medium bg-card;
+  @apply p-2 font-medium border-r-0;
+}
+
+.rbc-time-header-content .rbc-header:last-child {
+  @apply border-r-0;
+}
+
+.rbc-header + .rbc-header {
+  @apply border-r-0;
+}
+
+.rbc-time-header.rbc-overflowing {
+  @apply border-0 m-0 hidden;
+}
+
+.rbc-time-header-content {
+  @apply border-l border-border;
 }
 
 /* Time Content and Slots
       ========================================================================== */
 .rbc-time-content {
-  @apply overflow-y-auto;
+  @apply overflow-y-auto border-0;
+}
+
+.rbc-time-content > * + * {
+  @apply border-l border-border;
 }
 
 .rbc-timeslot-group {
-  @apply min-h-[40px] flex flex-col;
+  @apply min-h-[100px] flex flex-col border-b border-border/40;
 }
 
 .rbc-time-slot {
   @apply flex-1;
+}
+
+.rbc-time-column {
+  @apply min-h-[100px] relative;
 }
 
 .rbc-label {
@@ -47,8 +62,8 @@
 /* Event Styling
       ========================================================================== */
 .rbc-event {
-  @apply bg-blue-100 text-blue-800 rounded 
-            shadow-sm cursor-pointer px-2 py-1 text-sm;
+  @apply bg-transparent text-foreground rounded 
+            shadow-sm cursor-pointer px-2 py-1 text-sm border border-border;
 }
 
 .rbc-event-label {
@@ -60,17 +75,68 @@
 }
 
 .rbc-selected {
-  @apply bg-blue-200;
+  @apply bg-accent/5;
 }
 
-/* Today Highlighting
+/* Today and Current Time Styles
       ========================================================================== */
 .rbc-today {
-  @apply bg-accent/50;
+  @apply bg-transparent;
+}
+
+.rbc-day-bg.rbc-today {
+  @apply bg-transparent;
 }
 
 .rbc-current-time-indicator {
   @apply bg-primary h-[2px] z-[3];
+}
+
+/* View Specific Styles
+      ========================================================================== */
+.rbc-time-view {
+  @apply rounded-md border border-border;
+}
+
+.rbc-time-view .rbc-time-header.rbc-overflowing {
+  @apply hidden;
+  margin-right: 0 !important;
+}
+
+/* Month View
+      ========================================================================== */
+.rbc-month-view {
+  @apply border border-border rounded-md;
+}
+
+.rbc-month-row {
+  @apply border-0;
+}
+
+.rbc-month-header {
+  @apply border-b border-border;
+}
+
+/* Agenda View
+      ========================================================================== */
+.rbc-agenda-view {
+  @apply border border-border rounded-md;
+}
+
+.rbc-agenda-table {
+  @apply w-full;
+}
+
+.rbc-agenda-date-cell {
+  @apply p-2 border-r border-border;
+}
+
+.rbc-agenda-time-cell {
+  @apply p-2 border-r border-border;
+}
+
+.rbc-agenda-event-cell {
+  @apply p-2;
 }
 
 /* Drag and Drop Functionality
@@ -84,21 +150,7 @@
 }
 
 .rbc-addons-dnd-resize-ns-icon {
-  @apply h-full w-full bg-blue-800/20;
-}
-
-/* View Specific Styles
-      ========================================================================== */
-.rbc-time-view {
-  @apply rounded-md;
-}
-
-.rbc-time-column {
-  @apply min-h-[100px] relative;
-}
-
-.rbc-off-range {
-  @apply text-muted-foreground/60;
+  @apply h-full w-full bg-transparent;
 }
 
 /* Background Elements
@@ -111,32 +163,18 @@
   @apply flex-1;
 }
 
-.rbc-day-bg.rbc-today {
-  @apply bg-accent/50;
+.rbc-off-range {
+  @apply text-muted-foreground/60;
 }
 
-/* Border Resets
+/* Responsive Adjustments
       ========================================================================== */
-.rbc-time-view,
-.rbc-time-header,
-.rbc-time-header-content,
-.rbc-time-slot,
-.rbc-day-slot .rbc-time-slot,
-.rbc-header,
-.rbc-time-gutter,
-.rbc-timeslot-group,
-.rbc-day-bg,
-.rbc-today,
-.rbc-month-row + .rbc-month-row,
-.rbc-day-bg + .rbc-day-bg {
-  @apply border-0;
-}
+@media (max-width: 768px) {
+  .rbc-toolbar {
+    @apply flex-col gap-2;
+  }
 
-/* Agenda View
-      ========================================================================== */
-.rbc-agenda-view table.rbc-agenda-table,
-.rbc-agenda-view table.rbc-agenda-table thead > tr > th,
-.rbc-agenda-view table.rbc-agenda-table .rbc-agenda-time-cell,
-.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
-  @apply border-0;
+  .rbc-toolbar-label {
+    @apply text-center;
+  }
 }
