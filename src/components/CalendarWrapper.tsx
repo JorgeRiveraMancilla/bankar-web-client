@@ -1,8 +1,17 @@
 "use client";
 
-import { JSX, useCallback, useState, useEffect } from "react";
+import { JSX, useCallback, useState, useEffect, ReactNode } from "react";
 
-import { startOfWeek, format, parse, getDay } from "date-fns";
+import {
+  startOfWeek,
+  format,
+  parse,
+  getDay,
+  startOfDay,
+  isToday,
+  isBefore,
+  isAfter,
+} from "date-fns";
 import { es } from "date-fns/locale/es";
 import {
   Calendar,
@@ -10,6 +19,7 @@ import {
   View,
   Views,
   EventPropGetter,
+  ToolbarProps,
 } from "react-big-calendar";
 import withDragAndDrop, {
   EventInteractionArgs,
@@ -69,7 +79,26 @@ const customFormats = {
     )}`,
 };
 
-const messages = {
+type CalendarView = "month" | "week" | "day" | "agenda";
+
+type CalendarMessages = {
+  allDay: string;
+  previous: string;
+  next: string;
+  today: string;
+  month: string;
+  week: string;
+  day: string;
+  agenda: string;
+  date: string;
+  time: string;
+  event: string;
+  work_week: string;
+  noEventsInRange: string;
+  showMore: (total: number) => string;
+} & Record<CalendarView, string>;
+
+const messages: CalendarMessages = {
   allDay: "Todo el día",
   previous: "Anterior",
   next: "Siguiente",
@@ -196,6 +225,25 @@ export default function CalendarWrapper(): JSX.Element {
     [appointments, selectedAppointment]
   );
 
+  const getNavigationButtonState = useCallback(
+    (buttonType: "today" | "prev" | "next"): boolean => {
+      const today = startOfDay(new Date());
+      const currentDate = startOfDay(date);
+
+      switch (buttonType) {
+        case "today":
+          return isToday(currentDate);
+        case "prev":
+          return isBefore(currentDate, today);
+        case "next":
+          return isAfter(currentDate, today);
+        default:
+          return false;
+      }
+    },
+    [date]
+  );
+
   const eventPropGetter: EventPropGetter<Appointment> = useCallback(
     (event) => getAppointmentStyle(event),
     []
@@ -230,6 +278,70 @@ export default function CalendarWrapper(): JSX.Element {
         eventPropGetter={eventPropGetter}
         draggableAccessor={() => true}
         resizableAccessor={() => true}
+        components={{
+          toolbar: (toolbarProps: ToolbarProps<Appointment, object>) => (
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <span className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+                <button
+                  type="button"
+                  onClick={() => toolbarProps.onNavigate("PREV")}
+                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
+                    getNavigationButtonState("prev")
+                      ? "bg-background text-foreground shadow"
+                      : ""
+                  }`}
+                >
+                  {messages.previous}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => toolbarProps.onNavigate("TODAY")}
+                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
+                    getNavigationButtonState("today")
+                      ? "bg-background text-foreground shadow"
+                      : ""
+                  }`}
+                >
+                  {messages.today}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => toolbarProps.onNavigate("NEXT")}
+                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
+                    getNavigationButtonState("next")
+                      ? "bg-background text-foreground shadow"
+                      : ""
+                  }`}
+                >
+                  {messages.next}
+                </button>
+              </span>
+
+              <span className="text-lg font-semibold mx-4">
+                {toolbarProps.label}
+              </span>
+
+              <span className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+                {(toolbarProps.views as CalendarView[]).map((name: string) => (
+                  <button
+                    key={name}
+                    type="button"
+                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
+                      view === name
+                        ? "bg-background text-foreground shadow"
+                        : ""
+                    }`}
+                    onClick={() => toolbarProps.onView(name as CalendarView)}
+                  >
+                    {messages[name as keyof CalendarMessages] as ReactNode}
+                  </button>
+                ))}
+              </span>
+            </div>
+          ),
+        }}
       />
 
       <AppointmentModal
