@@ -1,18 +1,15 @@
-/* Base Calendar Container
-   ========================================================================== */
-.rbc-calendar,
+/* Base Calendar Container */
+.rbc-calendar {
+  @apply text-foreground overflow-hidden;
+}
+
 .rbc-calendar *,
 .rbc-calendar *:before,
 .rbc-calendar *:after {
   @apply border-0;
 }
 
-.rbc-calendar {
-  @apply text-foreground rounded-lg overflow-hidden;
-}
-
-/* Header Styles
-      ========================================================================== */
+/* Header Styles */
 .rbc-header {
   @apply p-2 font-medium border-r-0;
 }
@@ -33,8 +30,7 @@
   @apply border-r-0;
 }
 
-/* Time Content and Slots
-      ========================================================================== */
+/* Time Content and Slots */
 .rbc-time-content {
   @apply overflow-y-auto border-0;
   height: calc(100% - 70px);
@@ -60,11 +56,9 @@
   @apply px-2 py-1 text-sm text-muted-foreground;
 }
 
-/* Event Styles
-      ========================================================================== */
+/* Event Styles */
 .rbc-event {
-  @apply bg-transparent text-foreground rounded
-               shadow-sm cursor-pointer px-2 py-1 text-sm border border-border;
+  @apply bg-transparent text-foreground rounded shadow-sm cursor-pointer px-2 py-1 text-sm border border-border;
 }
 
 .rbc-event-label {
@@ -79,8 +73,7 @@
   @apply bg-accent/5;
 }
 
-/* Today and Current Time Styles
-      ========================================================================== */
+/* Today and Current Time Styles */
 .rbc-today,
 .rbc-day-bg.rbc-today {
   @apply bg-transparent;
@@ -90,10 +83,9 @@
   @apply bg-primary h-[2px] z-[3];
 }
 
-/* Month View
-      ========================================================================== */
+/* Month View */
 .rbc-month-view {
-  @apply border border-border rounded-md h-full;
+  @apply border border-border h-full;
   min-height: inherit;
 }
 
@@ -106,10 +98,9 @@
   @apply border-b border-border;
 }
 
-/* Time View (Week and Day)
-      ========================================================================== */
+/* Time View (Week and Day) */
 .rbc-time-view {
-  @apply rounded-md border border-border h-full;
+  @apply border border-border h-full !important;
 }
 
 .rbc-time-view .rbc-time-header.rbc-overflowing {
@@ -117,10 +108,9 @@
   margin-right: 0 !important;
 }
 
-/* Agenda View
-      ========================================================================== */
+/* Agenda View */
 .rbc-agenda-view {
-  @apply border border-border rounded-md flex flex-col;
+  @apply border border-border flex flex-col;
   min-height: calc(100vh - 12rem);
   overflow: visible !important;
 }
@@ -141,24 +131,15 @@
   overflow: visible !important;
 }
 
-.rbc-agenda-view .rbc-agenda-table-scroll {
-  overflow: visible !important;
-}
-
 .rbc-agenda-view table.rbc-agenda-table {
   @apply border-0;
 }
 
-.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
-  padding: 3px 5px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.rbc-agenda-view .rbc-agenda-table-scroll {
+  overflow: visible !important;
 }
 
-.rbc-agenda-date-cell {
-  @apply p-2 border-r border-border;
-}
-
+.rbc-agenda-date-cell,
 .rbc-agenda-time-cell {
   @apply p-2 border-r border-border;
 }
@@ -167,8 +148,7 @@
   @apply p-2;
 }
 
-/* Background Elements
-      ========================================================================== */
+/* Background Elements */
 .rbc-row-bg {
   @apply absolute inset-0 flex;
 }
@@ -177,26 +157,81 @@
   @apply flex-1;
 }
 
+.rbc-day-bg + .rbc-day-bg {
+  @apply border-0;
+}
+
 .rbc-off-range {
   @apply text-muted-foreground/60;
 }
 
-/* Drag and Drop Functionality
-      ========================================================================== */
+/* Row Content */
+.rbc-row {
+  @apply flex;
+}
+
+.rbc-row-segment {
+  @apply flex-1;
+}
+
+.rbc-button-link {
+  @apply appearance-none bg-transparent border-0 m-0 p-0 cursor-pointer text-inherit;
+}
+
+/* Toolbar */
+.rbc-toolbar {
+  @apply flex items-center justify-between gap-2 mb-2;
+}
+
+.rbc-toolbar button {
+  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium;
+  @apply ring-offset-background transition-all;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  @apply disabled:pointer-events-none disabled:opacity-50;
+}
+
+.rbc-toolbar button.rbc-active {
+  @apply bg-background text-foreground shadow;
+}
+
+.rbc-toolbar-label {
+  @apply text-lg font-semibold mx-4;
+}
+
+/* Drag and Drop Functionality */
 .rbc-allday-cell {
   @apply hidden;
 }
 
+.rbc-addons-dnd .rbc-addons-dnd-row-body {
+  @apply relative;
+}
+
+.rbc-addons-dnd .rbc-addons-dnd-drag-preview {
+  @apply absolute shadow-lg pointer-events-none z-50;
+}
+
+.rbc-addons-dnd-resizable {
+  @apply w-full h-full relative;
+}
+
 .rbc-addons-dnd-resize-ns-anchor {
-  @apply cursor-ns-resize h-1 w-full;
+  @apply cursor-ns-resize h-1 w-full absolute left-0;
+}
+
+.rbc-addons-dnd-resize-ns-anchor:first-child {
+  @apply top-0;
+}
+
+.rbc-addons-dnd-resize-ns-anchor:last-child {
+  @apply bottom-0;
 }
 
 .rbc-addons-dnd-resize-ns-icon {
   @apply h-full w-full bg-transparent;
 }
 
-/* Responsive Adjustments
-      ========================================================================== */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .rbc-toolbar {
     @apply flex-col gap-2;
