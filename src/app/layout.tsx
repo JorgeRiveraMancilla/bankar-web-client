@@ -39,7 +39,7 @@ export default function RootLayout({ children }: Readonly<Props>): JSX.Element {
           <div className="flex flex-1">
             <SideBar />
 
-            <main className="flex-1 p-2">{children}</main>
+            <main className="flex-1 p-4">{children}</main>
           </div>
         </div>
       </body>

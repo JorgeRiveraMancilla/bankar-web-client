@@ -4,10 +4,10 @@ import CalendarWrapper from "@/components/CalendarWrapper";
 
 export default function HomePage(): JSX.Element {
   return (
-    <main className="container mx-auto">
-      <h1 className="text-2xl font-bold my-4">Agenda de Citas</h1>
+    <>
+      <h1 className="text-2xl font-bold mb-4">Calendario</h1>
 
       <CalendarWrapper />
-    </main>
+    </>
   );
 }
