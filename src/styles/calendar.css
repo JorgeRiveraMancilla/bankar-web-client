@@ -10,7 +10,7 @@
 }
 
 .rbc-button-link {
-  @apply appearance-none bg-transparent border-0 m-0 p-0 cursor-pointer text-inherit;
+  @apply appearance-none bg-transparent border-0 m-0 p-0 cursor-pointer;
 }
 /*#endregion*/
 
@@ -24,7 +24,7 @@
 }
 
 .rbc-event-content {
-  @apply text-sm text-ellipsis;
+  @apply text-sm truncate;
 }
 
 .rbc-selected {
@@ -34,7 +34,7 @@
 
 /*#region Header and Labels*/
 .rbc-header {
-  @apply p-2 font-medium border-0 border-l border-border h-[30px] flex justify-center items-center;
+  @apply p-2 font-medium border-0 border-l border-border flex justify-center items-center;
 }
 
 .rbc-header + .rbc-header {
@@ -46,7 +46,7 @@
 }
 
 .rbc-time-header {
-  @apply border-b border-border;
+  @apply border-b border-border h-[30px];
 }
 
 .rbc-time-header.rbc-overflowing {
@@ -58,7 +58,7 @@
 }
 
 .rbc-time-header-content .rbc-header:last-child {
-  @apply border-0 border-l border-border !important;
+  @apply border-0 border-l border-border;
 }
 /*#endregion*/
 
@@ -101,7 +101,7 @@
 }
 
 .rbc-current-time-indicator {
-  @apply bg-primary h-[2px] z-[3];
+  @apply bg-primary h-0.5 z-[3];
 }
 
 .rbc-time-column .rbc-timeslot-group {
@@ -109,21 +109,18 @@
 }
 
 .rbc-time-column .rbc-timeslot-group:first-child {
-  border-top: 0;
+  @apply border-t-0;
 }
 
 .rbc-time-view:has(.rbc-time-content > :nth-child(2):last-child)
   .rbc-time-header {
-  display: none;
+  @apply hidden;
 }
 /*#endregion*/
 
 /*#region Month View*/
 .rbc-month-view {
-  @apply border border-border rounded-lg overflow-hidden h-fit;
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 !important;
+  @apply border border-border rounded-lg overflow-hidden h-fit flex flex-col flex-1;
 }
 
 .rbc-month-header {
@@ -135,15 +132,7 @@
 }
 
 .rbc-month-row {
-  @apply border-t border-border;
-  height: 150px !important;
-  min-height: 150px !important;
-  max-height: 150px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  position: relative !important;
-  overflow: hidden !important;
-  flex: 0 0 150px !important;
+  @apply border-t border-border h-[150px] min-h-[150px] max-h-[150px] flex flex-col relative overflow-hidden flex-[0_0_150px];
 }
 
 .rbc-off-range-bg {
@@ -151,40 +140,29 @@
 }
 
 .rbc-month-row:last-child {
+  /* Hide last row if it only contains a single day that's not off-range */
   &:has(.rbc-date-cell:not(.rbc-off-range-bg):only-child) {
-    display: none;
+    @apply hidden;
   }
 
+  /* Hide last row if it's marked as single day */
   &[data-single-day="true"] {
-    display: none;
+    @apply hidden;
   }
 }
 /*#endregion*/
 
 /*#region Background Elements*/
 .rbc-row-bg {
-  position: absolute !important;
-  inset: 0 !important;
-  display: flex !important;
-  flex-direction: row !important;
-  z-index: 0 !important;
-  background: transparent !important;
-  border: none !important;
-  pointer-events: none !important;
+  @apply absolute inset-0 flex flex-row z-0 bg-transparent border-0 pointer-events-none;
 }
 
 .rbc-row-content {
-  flex: 1 1 auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  position: relative !important;
-  z-index: 1 !important;
-  min-height: 0 !important;
+  @apply flex-1 flex flex-col relative z-[1] min-h-0;
 }
 
 .rbc-day-bg {
-  @apply border-l border-border;
-  flex: 1 !important;
+  @apply border-l border-border flex-1;
 }
 
 .rbc-row-bg .rbc-day-bg:first-child {
@@ -211,10 +189,9 @@
 }
 
 .rbc-toolbar button {
-  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium;
-  @apply ring-offset-background transition-all;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
-  @apply disabled:pointer-events-none disabled:opacity-50;
+  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium 
+    ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 
+    focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
 }
 
 .rbc-toolbar button.rbc-active {
@@ -258,10 +235,7 @@
 
 /*#region Agenda View*/
 .rbc-agenda-view {
-  @apply border border-border rounded-lg overflow-auto h-fit;
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 !important;
+  @apply border border-border rounded-lg overflow-auto h-fit flex flex-col flex-1;
 }
 
 .rbc-agenda-content {
@@ -273,7 +247,7 @@
 }
 
 .rbc-agenda-table {
-  @apply w-full table-fixed border-separate border-spacing-0;
+  @apply w-full table-fixed border-separate border-spacing-0 h-[30px];
 }
 
 .rbc-agenda-view table.rbc-agenda-table {
@@ -281,36 +255,38 @@
 }
 
 .rbc-agenda-view table.rbc-agenda-table thead > tr > th.rbc-header {
-  @apply border-b border-border text-sm font-medium;
-  display: table-cell !important;
-  vertical-align: middle !important;
-  text-align: left !important;
-  padding: 0.75rem 1rem !important;
-  height: auto !important;
+  @apply border-b border-border table-cell align-middle text-center;
 }
 
 .rbc-agenda-view .rbc-header {
-  @apply border-0;
-  flex: none !important;
-  justify-content: flex-start !important;
+  @apply border-0 flex-none justify-start;
 }
 
 .rbc-agenda-date-cell,
 .rbc-agenda-time-cell,
 .rbc-agenda-event-cell {
-  @apply text-sm border-0;
-  display: table-cell !important;
-  vertical-align: middle !important;
-  padding: 0.75rem 1rem !important;
+  @apply text-sm border-0 table-cell align-middle p-3;
 }
 
 .rbc-agenda-date-cell,
 .rbc-agenda-time-cell {
-  width: 150px !important;
+  @apply w-[150px];
 }
 
 .rbc-agenda-view .rbc-agenda-table tbody > tr {
   @apply transition-colors hover:bg-accent/5;
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  @apply p-0;
+}
+
+.rbc-agenda-view
+  table.rbc-agenda-table
+  thead
+  > tr
+  > th.rbc-header:not(:first-child) {
+  @apply border-l border-border;
 }
 /*#endregion*/
 
@@ -326,7 +302,7 @@
 
   .rbc-agenda-date-cell,
   .rbc-agenda-time-cell {
-    width: 120px !important;
+    @apply w-[120px];
   }
 }
 /*#endregion*/
