@@ -11,14 +11,10 @@
   @apply text-foreground rounded-lg overflow-hidden;
 }
 
-/* Header and Time Header Styles
+/* Header Styles
       ========================================================================== */
 .rbc-header {
   @apply p-2 font-medium border-r-0;
-}
-
-.rbc-time-header-content .rbc-header:last-child {
-  @apply border-r-0;
 }
 
 .rbc-header + .rbc-header {
@@ -33,10 +29,15 @@
   @apply border-l border-border;
 }
 
+.rbc-time-header-content .rbc-header:last-child {
+  @apply border-r-0;
+}
+
 /* Time Content and Slots
       ========================================================================== */
 .rbc-time-content {
   @apply overflow-y-auto border-0;
+  height: calc(100% - 70px);
 }
 
 .rbc-time-content > * + * {
@@ -59,11 +60,11 @@
   @apply px-2 py-1 text-sm text-muted-foreground;
 }
 
-/* Event Styling
+/* Event Styles
       ========================================================================== */
 .rbc-event {
-  @apply bg-transparent text-foreground rounded 
-            shadow-sm cursor-pointer px-2 py-1 text-sm border border-border;
+  @apply bg-transparent text-foreground rounded
+               shadow-sm cursor-pointer px-2 py-1 text-sm border border-border;
 }
 
 .rbc-event-label {
@@ -80,10 +81,7 @@
 
 /* Today and Current Time Styles
       ========================================================================== */
-.rbc-today {
-  @apply bg-transparent;
-}
-
+.rbc-today,
 .rbc-day-bg.rbc-today {
   @apply bg-transparent;
 }
@@ -92,10 +90,26 @@
   @apply bg-primary h-[2px] z-[3];
 }
 
-/* View Specific Styles
+/* Month View
+      ========================================================================== */
+.rbc-month-view {
+  @apply border border-border rounded-md h-full;
+  min-height: inherit;
+}
+
+.rbc-month-row {
+  @apply border-0 flex-1;
+  min-height: 100px;
+}
+
+.rbc-month-header {
+  @apply border-b border-border;
+}
+
+/* Time View (Week and Day)
       ========================================================================== */
 .rbc-time-view {
-  @apply rounded-md border border-border;
+  @apply rounded-md border border-border h-full;
 }
 
 .rbc-time-view .rbc-time-header.rbc-overflowing {
@@ -103,28 +117,42 @@
   margin-right: 0 !important;
 }
 
-/* Month View
-      ========================================================================== */
-.rbc-month-view {
-  @apply border border-border rounded-md;
-}
-
-.rbc-month-row {
-  @apply border-0;
-}
-
-.rbc-month-header {
-  @apply border-b border-border;
-}
-
 /* Agenda View
       ========================================================================== */
 .rbc-agenda-view {
-  @apply border border-border rounded-md;
+  @apply border border-border rounded-md flex flex-col;
+  min-height: calc(100vh - 12rem);
+  overflow: visible !important;
+}
+
+.rbc-agenda-content {
+  @apply flex-1;
+  min-height: calc(100vh - 12rem);
+  overflow: visible !important;
+}
+
+.rbc-agenda-empty {
+  @apply p-4 text-center text-muted-foreground flex items-center justify-center;
+  min-height: calc(100vh - 12rem);
 }
 
 .rbc-agenda-table {
-  @apply w-full;
+  @apply w-full flex-1;
+  overflow: visible !important;
+}
+
+.rbc-agenda-view .rbc-agenda-table-scroll {
+  overflow: visible !important;
+}
+
+.rbc-agenda-view table.rbc-agenda-table {
+  @apply border-0;
+}
+
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+  padding: 3px 5px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
 }
 
 .rbc-agenda-date-cell {
@@ -139,20 +167,6 @@
   @apply p-2;
 }
 
-/* Drag and Drop Functionality
-      ========================================================================== */
-.rbc-allday-cell {
-  @apply hidden;
-}
-
-.rbc-addons-dnd-resize-ns-anchor {
-  @apply cursor-ns-resize h-1 w-full;
-}
-
-.rbc-addons-dnd-resize-ns-icon {
-  @apply h-full w-full bg-transparent;
-}
-
 /* Background Elements
       ========================================================================== */
 .rbc-row-bg {
@@ -165,6 +179,20 @@
 
 .rbc-off-range {
   @apply text-muted-foreground/60;
+}
+
+/* Drag and Drop Functionality
+      ========================================================================== */
+.rbc-allday-cell {
+  @apply hidden;
+}
+
+.rbc-addons-dnd-resize-ns-anchor {
+  @apply cursor-ns-resize h-1 w-full;
+}
+
+.rbc-addons-dnd-resize-ns-icon {
+  @apply h-full w-full bg-transparent;
 }
 
 /* Responsive Adjustments
