@@ -279,7 +279,7 @@ export default function CalendarWrapper(): JSX.Element {
         resizableAccessor={() => true}
         components={{
           toolbar: (toolbarProps: ToolbarProps<Appointment, object>) => (
-            <div className="flex items-center justify-between gap-2 mb-2">
+            <div className="flex items-center justify-between gap-2 mb-4">
               <span className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
                 <button
                   type="button"
@@ -318,7 +318,7 @@ export default function CalendarWrapper(): JSX.Element {
                 </button>
               </span>
 
-              <span className="text-lg font-semibold mx-4">
+              <span className="text-lg font-semibold">
                 {toolbarProps.label}
               </span>
 
