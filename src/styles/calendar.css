@@ -1,50 +1,142 @@
-/* Contenedor de los botones de navegación */
-.rbc-toolbar {
-  @apply flex flex-wrap items-center justify-center gap-2 mb-4;
+/* Base Calendar Container
+   ========================================================================== */
+.rbc-calendar,
+.rbc-calendar *,
+.rbc-calendar *:before,
+.rbc-calendar *:after {
+  @apply border-0;
 }
 
-/* Grupo de botones de navegación */
-.rbc-btn-group {
-  @apply inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground;
+.rbc-calendar {
+  @apply bg-background text-foreground rounded-lg overflow-hidden;
 }
 
-/* Reset de estilos base de los botones */
-.rbc-toolbar button {
-  @apply bg-transparent border-0 p-0;
+/* Header Styles
+      ========================================================================== */
+.rbc-time-header {
+  @apply bg-card;
 }
 
-/* Botones individuales */
-.rbc-btn-group button {
-  @apply inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border-0;
+.rbc-time-header-content,
+.rbc-header + .rbc-header {
+  @apply border-0;
 }
 
-/* Mantener el radio en los botones, independientemente de su posición */
-.rbc-btn-group > button:first-child:not(:last-child),
-.rbc-btn-group > button:not(:first-child):not(:last-child),
-.rbc-btn-group > button:last-child:not(:first-child) {
-  @apply rounded-md border-0;
+.rbc-header {
+  @apply p-2 font-medium bg-card;
 }
 
-/* Sobreescribir todos los estados del botón */
-.rbc-btn-group button,
-.rbc-btn-group button:hover,
-.rbc-btn-group button:active,
-.rbc-btn-group button:focus {
-  @apply bg-transparent;
+/* Time Content and Slots
+      ========================================================================== */
+.rbc-time-content {
+  @apply overflow-y-auto;
 }
 
-/* Botón activo */
-.rbc-btn-group button.rbc-active {
-  @apply bg-background text-foreground shadow border-0;
+.rbc-timeslot-group {
+  @apply min-h-[40px] flex flex-col;
 }
 
-/* Mantener el estado activo sin cambios en hover */
-.rbc-btn-group button.rbc-active:hover,
-.rbc-btn-group button.rbc-active:focus {
-  @apply bg-background text-foreground shadow;
+.rbc-time-slot {
+  @apply flex-1;
 }
 
-/* Selector de vista (Mes, Semana, Día, Agenda) */
-.rbc-toolbar-label {
-  @apply text-lg font-semibold mx-4;
+.rbc-label {
+  @apply px-2 py-1 text-sm text-muted-foreground;
+}
+
+/* Event Styling
+      ========================================================================== */
+.rbc-event {
+  @apply bg-blue-100 text-blue-800 rounded 
+            shadow-sm cursor-pointer px-2 py-1 text-sm;
+}
+
+.rbc-event-label {
+  @apply font-medium mb-1;
+}
+
+.rbc-event-content {
+  @apply text-sm overflow-hidden text-ellipsis;
+}
+
+.rbc-selected {
+  @apply bg-blue-200;
+}
+
+/* Today Highlighting
+      ========================================================================== */
+.rbc-today {
+  @apply bg-accent/50;
+}
+
+.rbc-current-time-indicator {
+  @apply bg-primary h-[2px] z-[3];
+}
+
+/* Drag and Drop Functionality
+      ========================================================================== */
+.rbc-allday-cell {
+  @apply hidden;
+}
+
+.rbc-addons-dnd-resize-ns-anchor {
+  @apply cursor-ns-resize h-1 w-full;
+}
+
+.rbc-addons-dnd-resize-ns-icon {
+  @apply h-full w-full bg-blue-800/20;
+}
+
+/* View Specific Styles
+      ========================================================================== */
+.rbc-time-view {
+  @apply rounded-md;
+}
+
+.rbc-time-column {
+  @apply min-h-[100px] relative;
+}
+
+.rbc-off-range {
+  @apply text-muted-foreground/60;
+}
+
+/* Background Elements
+      ========================================================================== */
+.rbc-row-bg {
+  @apply absolute inset-0 flex;
+}
+
+.rbc-day-bg {
+  @apply flex-1;
+}
+
+.rbc-day-bg.rbc-today {
+  @apply bg-accent/50;
+}
+
+/* Border Resets
+      ========================================================================== */
+.rbc-time-view,
+.rbc-time-header,
+.rbc-time-header-content,
+.rbc-time-slot,
+.rbc-day-slot .rbc-time-slot,
+.rbc-header,
+.rbc-time-gutter,
+.rbc-timeslot-group,
+.rbc-day-bg,
+.rbc-today,
+.rbc-month-row + .rbc-month-row,
+.rbc-day-bg + .rbc-day-bg {
+  @apply border-0;
+}
+
+/* Agenda View
+      ========================================================================== */
+.rbc-agenda-view table.rbc-agenda-table,
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th,
+.rbc-agenda-view table.rbc-agenda-table .rbc-agenda-time-cell,
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td {
+  @apply border-0;
 }
