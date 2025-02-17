@@ -148,8 +148,8 @@ export const AppointmentModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] md:h-auto h-screen w-full md:w-auto p-0 md:p-6 overflow-y-auto">
-        <DialogHeader className="sticky top-0 bg-background p-4 md:p-0 md:pb-4 z-10 border-b md:border-none">
+      <DialogContent className="sm:max-w-[425px] md:h-auto h-screen w-full md:w-auto p-6 pt-9 overflow-y-auto">
+        <DialogHeader className="sticky top-0 bg-background pb-4 z-10 border-b md:border-none">
           <DialogTitle>
             {appointment ? "Editar Cita" : "Nueva Cita"}
           </DialogTitle>

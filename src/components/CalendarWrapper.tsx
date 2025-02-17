@@ -279,65 +279,79 @@ export default function CalendarWrapper(): JSX.Element {
         resizableAccessor={() => true}
         components={{
           toolbar: (toolbarProps: ToolbarProps<Appointment, object>) => (
-            <div className="flex items-center justify-between gap-2 mb-4">
-              <span className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
-                <button
-                  type="button"
-                  onClick={() => toolbarProps.onNavigate("PREV")}
-                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-                    getNavigationButtonState("prev")
-                      ? "bg-background text-foreground shadow"
-                      : ""
-                  }`}
-                >
-                  {messages.previous}
-                </button>
+            <div className="flex flex-col space-y-4 mb-4 md:space-y-0 md:flex-row md:items-center md:justify-between">
+              {/* Views (Mes, Semana, Día, Agenda) - First on mobile, Last on desktop */}
+              <div className="flex w-full order-1 md:order-3 md:w-auto">
+                <span className="flex w-full h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
+                  {(toolbarProps.views as CalendarView[]).map(
+                    (name: string) => (
+                      <button
+                        key={name}
+                        type="button"
+                        className={`flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial ${
+                          view === name
+                            ? "bg-background text-foreground shadow"
+                            : ""
+                        }`}
+                        onClick={() => {
+                          toolbarProps.onView(name as CalendarView);
+                          setView(name as View);
+                        }}
+                      >
+                        {messages[name as keyof CalendarMessages] as ReactNode}
+                      </button>
+                    )
+                  )}
+                </span>
+              </div>
 
-                <button
-                  type="button"
-                  onClick={() => toolbarProps.onNavigate("TODAY")}
-                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-                    getNavigationButtonState("today")
-                      ? "bg-background text-foreground shadow"
-                      : ""
-                  }`}
-                >
-                  {messages.today}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => toolbarProps.onNavigate("NEXT")}
-                  className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-                    getNavigationButtonState("next")
-                      ? "bg-background text-foreground shadow"
-                      : ""
-                  }`}
-                >
-                  {messages.next}
-                </button>
-              </span>
-
-              <span className="text-lg font-semibold">
-                {toolbarProps.label}
-              </span>
-
-              <span className="inline-flex h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
-                {(toolbarProps.views as CalendarView[]).map((name: string) => (
+              {/* Navigation buttons (Anterior, Hoy, Siguiente) - Second on mobile, First on desktop */}
+              <div className="flex w-full order-2 md:order-1 md:w-auto">
+                <span className="flex w-full h-9 items-center justify-center rounded-lg bg-muted p-1 text-muted-foreground">
                   <button
-                    key={name}
                     type="button"
-                    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-                      view === name
+                    onClick={() => toolbarProps.onNavigate("PREV")}
+                    className={`flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial ${
+                      getNavigationButtonState("prev")
                         ? "bg-background text-foreground shadow"
                         : ""
                     }`}
-                    onClick={() => toolbarProps.onView(name as CalendarView)}
                   >
-                    {messages[name as keyof CalendarMessages] as ReactNode}
+                    {messages.previous}
                   </button>
-                ))}
-              </span>
+
+                  <button
+                    type="button"
+                    onClick={() => toolbarProps.onNavigate("TODAY")}
+                    className={`flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial ${
+                      getNavigationButtonState("today")
+                        ? "bg-background text-foreground shadow"
+                        : ""
+                    }`}
+                  >
+                    {messages.today}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => toolbarProps.onNavigate("NEXT")}
+                    className={`flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial ${
+                      getNavigationButtonState("next")
+                        ? "bg-background text-foreground shadow"
+                        : ""
+                    }`}
+                  >
+                    {messages.next}
+                  </button>
+                </span>
+              </div>
+
+              {/* Current date label - Third on mobile, Second on desktop */}
+              <div className="order-3 md:order-2">
+                <span className="text-lg font-semibold text-center block md:text-left">
+                  {toolbarProps.label}
+                </span>
+              </div>
             </div>
           ),
         }}

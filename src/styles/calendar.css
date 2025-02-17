@@ -1,6 +1,6 @@
 /*#region Base Calendar*/
 .rbc-calendar {
-  @apply text-foreground h-fit;
+  @apply text-foreground h-fit box-border;
 }
 
 .rbc-calendar *,
@@ -46,7 +46,7 @@
 }
 
 .rbc-time-header {
-  @apply border-b border-border h-[30px];
+  @apply border-b border-border h-8 box-border;
 }
 
 .rbc-time-header.rbc-overflowing {
@@ -64,7 +64,7 @@
 
 /*#region Time View*/
 .rbc-time-view {
-  @apply h-[100px] border border-border rounded-lg;
+  @apply border border-border rounded-lg h-fit;
 }
 
 .rbc-time-content {
@@ -81,11 +81,11 @@
 }
 
 .rbc-time-column {
-  @apply min-h-[100px];
+  @apply h-fit;
 }
 
 .rbc-timeslot-group {
-  @apply min-h-[100px] flex flex-col border-0;
+  @apply flex flex-col border-0 min-h-40;
 }
 
 .rbc-time-slot {
@@ -93,7 +93,7 @@
 }
 
 .rbc-day-slot .rbc-time-slot {
-  @apply border-t border-border/50;
+  @apply border-t border-border/50 min-h-2;
 }
 
 .rbc-day-slot .rbc-time-slot:first-child {
@@ -124,15 +124,15 @@
 }
 
 .rbc-month-header {
-  @apply flex border-0 h-[30px] justify-center items-center;
+  @apply flex border-0 h-8 justify-center items-center border-b border-border box-border;
 }
 
 .rbc-month-view .rbc-header:first-child {
   @apply border-0;
 }
 
-.rbc-month-row {
-  @apply border-t border-border h-[150px] min-h-[150px] max-h-[150px] flex flex-col relative overflow-hidden flex-[0_0_150px];
+.rbc-calendar .rbc-month-row {
+  @apply h-40 min-h-40 max-h-40 flex flex-col relative overflow-hidden flex-[0_0_160px];
 }
 
 .rbc-off-range-bg {
@@ -239,7 +239,7 @@
 }
 
 .rbc-agenda-content {
-  @apply flex-grow overflow-auto min-h-[400px];
+  @apply flex-grow overflow-auto min-h-96;
 }
 
 .rbc-agenda-empty {
@@ -247,7 +247,7 @@
 }
 
 .rbc-agenda-table {
-  @apply w-full table-fixed border-separate border-spacing-0 h-[30px];
+  @apply w-full table-fixed border-separate border-spacing-0 h-8;
 }
 
 .rbc-agenda-view table.rbc-agenda-table {
@@ -270,7 +270,7 @@
 
 .rbc-agenda-date-cell,
 .rbc-agenda-time-cell {
-  @apply w-[150px];
+  @apply w-40;
 }
 
 .rbc-agenda-view .rbc-agenda-table tbody > tr {
@@ -292,17 +292,70 @@
 
 /*#region Responsive*/
 @media (max-width: 768px) {
+  /* Toolbar Adjustments */
   .rbc-toolbar {
-    @apply flex-col gap-2;
+    @apply flex-col items-stretch gap-2;
   }
 
   .rbc-toolbar-label {
-    @apply text-center;
+    @apply text-center text-base;
   }
 
+  .rbc-toolbar button {
+    @apply text-xs px-2;
+  }
+
+  /* Time View Adjustments */
+  .rbc-time-content {
+    @apply h-fit;
+  }
+
+  .rbc-header {
+    @apply p-1 text-sm;
+  }
+
+  .rbc-label {
+    @apply px-1 text-xs;
+  }
+
+  /* Event Display */
+  .rbc-event {
+    @apply px-1 py-0.5;
+  }
+
+  .rbc-event-label {
+    @apply text-xs mb-0.5;
+  }
+
+  .rbc-event-content {
+    @apply text-xs;
+  }
+
+  /* Day View Specific */
+  .rbc-time-header-content {
+    @apply border-0;
+  }
+
+  .rbc-allday-cell {
+    @apply hidden;
+  }
+
+  .rbc-time-content > * + * > * {
+    @apply border-0;
+  }
+
+  .rbc-day-slot {
+    @apply border-0;
+  }
+
+  /* Agenda View Adjustments */
   .rbc-agenda-date-cell,
   .rbc-agenda-time-cell {
-    @apply w-[120px];
+    @apply w-[100px];
+  }
+
+  .rbc-agenda-event-cell {
+    @apply px-2 py-1;
   }
 }
 /*#endregion*/
