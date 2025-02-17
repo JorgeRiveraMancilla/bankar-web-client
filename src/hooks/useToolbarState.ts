@@ -1,4 +1,3 @@
-// hooks/useToolbarState.ts
 import { useCallback } from "react";
 
 import { startOfDay, isToday, isBefore, isAfter } from "date-fns";
