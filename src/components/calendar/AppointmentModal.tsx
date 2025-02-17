@@ -42,8 +42,8 @@ export function AppointmentModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] md:h-auto h-screen w-full md:w-auto p-6 pt-9 overflow-y-auto">
-        <DialogHeader className="sticky top-0 bg-background pb-4 z-10 border-b md:border-none">
+      <DialogContent className="w-[calc(100%-2rem)] max-w-[90%] sm:max-w-[425px] mx-auto my-4">
+        <DialogHeader>
           <DialogTitle>
             {appointment ? "Editar Cita" : "Nueva Cita"}
           </DialogTitle>
@@ -52,7 +52,7 @@ export function AppointmentModal({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid gap-4 p-4 md:p-0 flex-1">
+        <div className="py-4 space-y-6">
           {/* DatePicker */}
           <AppointmentDatePicker formData={formData} onChange={handleChange} />
 
@@ -69,7 +69,7 @@ export function AppointmentModal({
           <AppointmentService formData={formData} onChange={handleChange} />
         </div>
 
-        <div className="sticky bottom-0 bg-background p-4 md:p-0 md:pt-4 border-t">
+        <div className="border-t pt-4">
           {error && (
             <p className="text-sm text-red-500 font-medium mb-4">{error}</p>
           )}
