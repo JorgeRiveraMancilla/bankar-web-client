@@ -1,4 +1,4 @@
-export { cn } from "./tailwindMerge";
+export { cn } from "./tailwind-merge";
 export {
   stylistColors,
   roundToNearestFiveMinutes,
