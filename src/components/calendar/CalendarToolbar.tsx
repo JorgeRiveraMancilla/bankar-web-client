@@ -5,8 +5,7 @@ import { ToolbarProps, View } from "react-big-calendar";
 import { messages } from "@/config/calendar/messages";
 import { useToolbarState } from "@/hooks/useToolbarState";
 import { Appointment } from "@/types/appointments";
-
-type CalendarView = "month" | "week" | "day" | "agenda";
+import { CalendarView } from "@/types/calendar";
 
 export function CalendarToolbar(
   props: ToolbarProps<Appointment, object>
