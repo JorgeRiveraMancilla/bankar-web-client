@@ -33,6 +33,8 @@ import {
   checkAppointmentOverlap,
   roundToNearestFiveMinutes,
   getAppointmentStyle,
+  capitalizeWords,
+  capitalizeFirst,
 } from "@/lib";
 import { Appointment, SlotInfo } from "@/types";
 
@@ -53,30 +55,38 @@ const localizer = dateFnsLocalizer({
 const customFormats = {
   // Month view
   monthHeaderFormat: (date: Date) =>
-    format(date, "MMMM 'de' yyyy", { locale: es }),
-  weekdayFormat: (date: Date) => format(date, "EEEE", { locale: es }),
+    capitalizeFirst(format(date, "MMMM 'de' yyyy", { locale: es })),
+  weekdayFormat: (date: Date) =>
+    capitalizeFirst(format(date, "EEEE", { locale: es })),
   dateFormat: (date: Date) => format(date, "dd", { locale: es }),
 
   // Week views
   dayRangeHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
-    `${format(start, "dd 'de' MMMM", { locale: es })} - ${format(
-      end,
-      "dd 'de' MMMM",
-      { locale: es }
-    )}`,
-  dayFormat: (date: Date) => format(date, "EEEE dd", { locale: es }),
+    capitalizeWords(
+      `${format(start, "dd 'de' MMMM", { locale: es })} - ${format(
+        end,
+        "dd 'de' MMMM",
+        { locale: es }
+      )}`,
+      ["de"]
+    ),
+  dayFormat: (date: Date) =>
+    capitalizeFirst(format(date, "EEEE dd", { locale: es })),
 
   // Day view
   dayHeaderFormat: (date: Date) =>
-    format(date, "EEEE dd 'de' MMMM", { locale: es }),
+    capitalizeWords(format(date, "EEEE dd 'de' MMMM", { locale: es }), ["de"]),
 
   // Agenda view
   agendaHeaderFormat: ({ start, end }: { start: Date; end: Date }) =>
-    `${format(start, "dd 'de' MMMM 'de' yyyy", { locale: es })} - ${format(
-      end,
-      "dd 'de' MMMM 'de' yyyy",
-      { locale: es }
-    )}`,
+    capitalizeWords(
+      `${format(start, "dd 'de' MMMM 'de' yyyy", { locale: es })} - ${format(
+        end,
+        "dd 'de' MMMM 'de' yyyy",
+        { locale: es }
+      )}`,
+      ["de"]
+    ),
 };
 
 type CalendarView = "month" | "week" | "day" | "agenda";
