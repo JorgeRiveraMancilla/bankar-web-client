@@ -16,7 +16,7 @@ import { AppointmentParticipants } from "./AppointmentParticipants";
 import { AppointmentService } from "./AppointmentService";
 import { AppointmentTimePicker } from "./AppointmentTimePicker";
 
-interface AppointmentModalProps {
+interface Props {
   isOpen: boolean;
   onClose: () => void;
   selectedDate: Date | null;
@@ -30,7 +30,7 @@ export function AppointmentModal({
   selectedDate,
   onSubmit,
   appointment,
-}: AppointmentModalProps): JSX.Element | null {
+}: Props): JSX.Element | null {
   const { formData, error, handleChange, handleSubmit } = useAppointmentForm(
     selectedDate,
     appointment,
