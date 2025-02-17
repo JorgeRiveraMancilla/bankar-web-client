@@ -31,16 +31,14 @@ export default function RootLayout({ children }: Readonly<Props>): JSX.Element {
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
       >
-        <div className="flex min-h-screen flex-col">
-          <TopBar isMobile={true} />
+        <TopBar isMobile={true} />
 
-          <div className="flex flex-1">
-            <SideBar />
+        <div className="flex flex-1">
+          <SideBar />
 
-            <main className="flex-1 p-2">{children}</main>
-          </div>
+          <main className="flex-1 p-2 md:p-4">{children}</main>
         </div>
       </body>
     </html>
