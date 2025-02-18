@@ -4,8 +4,8 @@ import { format } from "date-fns";
 
 import { services, clients } from "@/data/mockData";
 import { roundToNearestFiveMinutes } from "@/lib";
-import { Appointment } from "@/types";
 import { FormData } from "@/types/appointment-form";
+import { Appointment } from "@/types/appointments";
 
 export function useAppointmentForm(
   selectedDate: Date | null,
