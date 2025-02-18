@@ -16,39 +16,36 @@ export function AppointmentTimePicker({
   const { hours, minutes } = useTimeOptions();
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div className="grid gap-2">
-        <Label>Hora *</Label>
+    <div className="grid gap-2">
+      <Label>Hora *</Label>
+      <div className="flex gap-2">
         <Select
           value={formData.hour}
           onValueChange={(value): void => onChange("hour", value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="HH" />
+            <SelectValue placeholder="Hora" />
           </SelectTrigger>
           <SelectContent>
             {hours.map((hour) => (
               <SelectItem key={hour.value} value={hour.value}>
-                {hour.label}
+                {hour.value}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
-      </div>
 
-      <div className="grid gap-2">
-        <Label>Minuto *</Label>
         <Select
           value={formData.minute}
           onValueChange={(value): void => onChange("minute", value)}
         >
           <SelectTrigger>
-            <SelectValue placeholder="MM" />
+            <SelectValue placeholder="Minuto" />
           </SelectTrigger>
           <SelectContent>
             {minutes.map((minute) => (
               <SelectItem key={minute.value} value={minute.value}>
-                {minute.label}
+                {minute.value}
               </SelectItem>
             ))}
           </SelectContent>
