@@ -63,7 +63,7 @@ export default function CalendarWrapper(): JSX.Element {
         max={new Date(0, 0, 0, 19, 0, 0)}
         culture="es"
         formats={customFormats}
-        views={["month", "week", "day", "agenda"]}
+        views={["month", "week", "day"]}
         messages={messages}
         onEventDrop={handleEventDrop}
         onEventResize={handleEventResize}
