@@ -23,27 +23,29 @@ function buildCascaderOptions(
     return cats
       .sort((a, b) => a.sortOrder - b.sortOrder)
       .map((category) => {
-        const option: CascaderOption = {
-          value: category.id.toString(),
-          label: category.name,
-        };
-
         if (category.isLeaf) {
           const categoryServices = services.filter(
             (service) => service.categoryId === category.id && service.isActive
           );
 
           if (categoryServices.length > 0) {
-            option.children = categoryServices.map((service) => ({
+            const service = categoryServices[0];
+            return {
               value: `service-${service.id}`,
-              label: `${service.fullName} - ${formatPrice(service.price)}`,
-            }));
+              label: `${category.name} - ${formatPrice(service.price)}`,
+              isLeaf: true,
+            };
           }
-        } else {
-          const children = buildOptions(category.id);
-          if (children.length > 0) {
-            option.children = children;
-          }
+        }
+
+        const option: CascaderOption = {
+          value: category.id.toString(),
+          label: category.name,
+        };
+
+        const children = buildOptions(category.id);
+        if (children.length > 0) {
+          option.children = children;
         }
 
         return option;
@@ -98,7 +100,7 @@ export const ServiceInput = ({ formData, onChange }: AppointmentFormProps) => {
       );
     }
 
-    path.push(`service-${service.id}`);
+    path[path.length - 1] = `service-${service.id}`;
     return path;
   };
 
@@ -109,8 +111,6 @@ export const ServiceInput = ({ formData, onChange }: AppointmentFormProps) => {
       onChange={handleServiceChange}
       options={cascaderOptions}
       placeholder="Seleccionar servicio"
-      searchPlaceholder="Buscar servicio..."
-      emptyMessage="No se encontraron servicios"
     />
   );
 };
