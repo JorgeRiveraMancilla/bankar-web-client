@@ -1,13 +1,11 @@
-import * as React from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { Check, ChevronsUpDown, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   Command,
-  CommandEmpty,
   CommandGroup,
-  CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
@@ -22,6 +20,7 @@ export interface CascaderOption {
   value: string;
   label: string;
   children?: CascaderOption[];
+  isLeaf?: boolean;
 }
 
 interface CascaderProps {
@@ -30,8 +29,6 @@ interface CascaderProps {
   onChange: (value: string[]) => void;
   options: CascaderOption[];
   placeholder: string;
-  searchPlaceholder: string;
-  emptyMessage: string;
 }
 
 export function Cascader({
@@ -40,21 +37,18 @@ export function Cascader({
   onChange,
   options,
   placeholder,
-  searchPlaceholder,
-  emptyMessage,
 }: CascaderProps) {
-  const [open, setOpen] = React.useState(false);
-  const [search, setSearch] = React.useState("");
-  const [levels, setLevels] = React.useState<CascaderOption[][]>([options]);
-  const [selectedIndices, setSelectedIndices] = React.useState<number[]>([]);
+  const [open, setOpen] = useState(false);
+  const [levels, setLevels] = useState<CascaderOption[][]>([options]);
+  const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
 
   // Reset levels when options change
-  React.useEffect(() => {
+  useEffect(() => {
     setLevels([options]);
   }, [options]);
 
   // Initialize from value prop
-  React.useEffect(() => {
+  useEffect(() => {
     if (value.length > 0) {
       const newLevels: CascaderOption[][] = [options];
       const newIndices: number[] = [];
@@ -74,10 +68,13 @@ export function Cascader({
 
       setLevels(newLevels);
       setSelectedIndices(newIndices);
+    } else {
+      setLevels([options]);
+      setSelectedIndices([]);
     }
   }, [value, options]);
 
-  const getSelectedPath = () => {
+  const getSelectedPath = useCallback(() => {
     let path = "";
     let currentLevel = options;
 
@@ -85,61 +82,69 @@ export function Cascader({
       const selectedOption = currentLevel[selectedIndices[i]];
       path += selectedOption.label;
       if (i < selectedIndices.length - 1) {
-        path += " / ";
+        path += " ";
         currentLevel = selectedOption.children || [];
       }
     }
 
     return path;
-  };
+  }, [options, selectedIndices]);
 
-  const handleSelect = (levelIndex: number, optionIndex: number) => {
-    const newSelectedIndices = [
-      ...selectedIndices.slice(0, levelIndex),
-      optionIndex,
-    ];
-    const selectedOption = levels[levelIndex][optionIndex];
+  const handleSelect = useCallback(
+    (levelIndex: number, optionIndex: number) => {
+      const selectedOption = levels[levelIndex][optionIndex];
+      const newSelectedIndices = [
+        ...selectedIndices.slice(0, levelIndex),
+        optionIndex,
+      ];
 
-    // Update levels
-    const newLevels = [...levels.slice(0, levelIndex + 1)];
-    if (selectedOption.children) {
-      newLevels.push(selectedOption.children);
-    }
+      // Update levels
+      const newLevels = [...levels.slice(0, levelIndex + 1)];
+      if (selectedOption.children) {
+        newLevels.push(selectedOption.children);
+      }
 
-    setLevels(newLevels);
-    setSelectedIndices(newSelectedIndices);
+      setLevels(newLevels);
+      setSelectedIndices(newSelectedIndices);
 
-    // Build value path
-    const valuePath = newSelectedIndices.map(
-      (index, i) => levels[i][index].value
-    );
-    onChange(valuePath);
+      // Build value path
+      const valuePath = newSelectedIndices.map(
+        (index, i) => levels[i][index].value
+      );
+      onChange(valuePath);
 
-    // Close if leaf node selected
-    if (!selectedOption.children) {
-      setOpen(false);
-    }
-  };
+      // Close if it's a leaf node
+      if (selectedOption.isLeaf) {
+        setOpen(false);
+      }
+    },
+    [levels, selectedIndices, onChange]
+  );
 
-  const renderLevel = (levelOptions: CascaderOption[], levelIndex: number) => (
-    <div key={levelIndex} className="min-w-[200px] border-l first:border-l-0">
-      {levelOptions.map((option, optionIndex) => (
-        <CommandItem
-          key={option.value}
-          value={`${levelIndex}-${option.value}`}
-          onSelect={() => handleSelect(levelIndex, optionIndex)}
-          className="flex justify-between"
-        >
-          {option.label}
-          <div className="flex items-center">
-            {selectedIndices[levelIndex] === optionIndex && (
-              <Check className="h-4 w-4 mr-2" />
-            )}
-            {option.children && <ChevronRight className="h-4 w-4" />}
-          </div>
-        </CommandItem>
-      ))}
-    </div>
+  const renderLevel = useCallback(
+    (levelOptions: CascaderOption[], levelIndex: number) => (
+      <div key={levelIndex} className="min-w-[200px] border-l first:border-l-0">
+        {levelOptions.map((option, optionIndex) => (
+          <CommandItem
+            key={option.value}
+            value={option.value}
+            onSelect={() => handleSelect(levelIndex, optionIndex)}
+            className="flex justify-between"
+          >
+            {option.label}
+            <div className="flex items-center">
+              {selectedIndices[levelIndex] === optionIndex && (
+                <Check className="h-4 w-4 mr-2" />
+              )}
+              {option.children && !option.isLeaf && (
+                <ChevronRight className="h-4 w-4" />
+              )}
+            </div>
+          </CommandItem>
+        ))}
+      </div>
+    ),
+    [handleSelect, selectedIndices]
   );
 
   return (
@@ -159,14 +164,7 @@ export function Cascader({
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Command className="w-full">
-            <CommandInput
-              placeholder={searchPlaceholder}
-              value={search}
-              onValueChange={setSearch}
-              className="h-9"
-            />
             <CommandList>
-              <CommandEmpty>{emptyMessage}</CommandEmpty>
               <CommandGroup>
                 <div className="flex overflow-auto">
                   {levels.map((levelOptions, index) =>
