@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 
 import { format } from "date-fns";
 
-import { services, clients } from "@/data/mockData";
+import { services, clients, stylists } from "@/data/mockData";
 import { roundToNearestFiveMinutes } from "@/lib";
-import { FormData } from "@/types/appointment-form";
-import { Appointment } from "@/types/appointments";
+import { Appointment, AppointmentFormData } from "@/types";
 
 export function useAppointmentForm(
   selectedDate: Date | null,
@@ -13,7 +12,7 @@ export function useAppointmentForm(
   onSubmit: (appointment: Appointment) => void,
   onClose: () => void
 ) {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<AppointmentFormData>({
     stylistId: "",
     clientId: "",
     serviceId: "",
@@ -30,9 +29,9 @@ export function useAppointmentForm(
 
       if (appointment) {
         setFormData({
-          stylistId: appointment.stylistId,
-          clientId: appointment.clientId,
-          serviceId: appointment.serviceId,
+          stylistId: appointment.stylist.id,
+          clientId: appointment.client.id,
+          serviceId: appointment.service.id.toString(),
           date: roundedDate,
           hour: format(roundedDate, "HH"),
           minute: format(roundedDate, "mm"),
@@ -52,7 +51,7 @@ export function useAppointmentForm(
   }, [selectedDate, appointment]);
 
   const handleChange = (
-    field: keyof FormData,
+    field: keyof AppointmentFormData,
     value: string | Date | undefined
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -70,10 +69,13 @@ export function useAppointmentForm(
       return;
     }
 
-    const selectedService = services.find((s) => s.id === formData.serviceId);
+    const selectedService = services.find(
+      (s) => s.id.toString() === formData.serviceId
+    );
     const selectedClient = clients.find((c) => c.id === formData.clientId);
+    const selectedStylist = stylists.find((s) => s.id === formData.stylistId);
 
-    if (!selectedService || !selectedClient) {
+    if (!selectedService || !selectedClient || !selectedStylist) {
       setError("Error al crear la cita");
       return;
     }
@@ -87,12 +89,12 @@ export function useAppointmentForm(
 
     const newAppointment: Appointment = {
       id: appointment?.id || Date.now().toString(),
-      title: `${selectedService.name} - ${selectedClient.name}`,
+      title: `${selectedService.fullName} - ${selectedClient.name}`,
       start: roundedStart,
       end,
-      stylistId: formData.stylistId,
-      clientId: formData.clientId,
-      serviceId: formData.serviceId,
+      stylist: selectedStylist,
+      client: selectedClient,
+      service: selectedService,
     };
 
     onSubmit(newAppointment);
