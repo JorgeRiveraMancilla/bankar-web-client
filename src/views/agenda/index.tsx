@@ -1,6 +1,6 @@
 import { JSX } from "react";
 
-import CalendarWrapper from "@/components/calendar/CalendarWrapper";
+import { CalendarWrapper } from "./calendar-wrapper/CalendarWrapper";
 
 export const AgendaView = (): JSX.Element => {
   return (

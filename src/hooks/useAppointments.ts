@@ -8,7 +8,7 @@ import {
   roundToNearestFiveMinutes,
   getAppointmentStyle,
 } from "@/lib";
-import { Appointment } from "@/types/appointments";
+import { Appointment } from "@/types";
 
 export function useAppointments(selectedAppointment: Appointment | null) {
   const [appointments, setAppointments] =
