@@ -1,6 +1,8 @@
+import React from "react";
+
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { CalendarIcon } from "lucide-react";
+import { Calendar as CalendarIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -25,47 +27,47 @@ export const DateTimeInput = ({ formData, onChange }: AppointmentFormProps) => {
   const { hours, minutes } = useTimeOptions();
 
   return (
-    <div className="grid gap-2">
+    <div className="space-y-2">
       <Label>Fecha y Hora *</Label>
 
-      {/* Date Picker */}
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            variant="outline"
-            className={cn(
-              "w-full justify-start text-left font-normal",
-              !formData.date && "text-muted-foreground"
-            )}
-          >
-            <CalendarIcon className="mr-2 h-4 w-4" />
-            {formData.date ? (
-              format(formData.date, "PPP", { locale: es })
-            ) : (
-              <span>Seleccionar fecha</span>
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="center">
-          <Calendar
-            mode="single"
-            selected={formData.date}
-            onSelect={(date): void => onChange("date", date)}
-            locale={es}
-            ISOWeek
-            initialFocus
-          />
-        </PopoverContent>
-      </Popover>
-
-      {/* Time Picker */}
       <div className="flex gap-2">
+        {/* Date Picker */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className={cn(
+                "flex-1 justify-start text-left font-normal",
+                !formData.date && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {formData.date ? (
+                format(formData.date, "PPP", { locale: es })
+              ) : (
+                <span>Seleccionar fecha</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="center">
+            <Calendar
+              mode="single"
+              selected={formData.date}
+              onSelect={(date): void => onChange("date", date)}
+              locale={es}
+              ISOWeek
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
+
+        {/* Time Picker */}
         <Select
           value={formData.hour}
           onValueChange={(value): void => onChange("hour", value)}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Hora" />
+          <SelectTrigger className="w-16">
+            <SelectValue placeholder="00" />
           </SelectTrigger>
           <SelectContent>
             {hours.map((hour) => (
@@ -80,8 +82,8 @@ export const DateTimeInput = ({ formData, onChange }: AppointmentFormProps) => {
           value={formData.minute}
           onValueChange={(value): void => onChange("minute", value)}
         >
-          <SelectTrigger>
-            <SelectValue placeholder="Min" />
+          <SelectTrigger className="w-16">
+            <SelectValue placeholder="00" />
           </SelectTrigger>
           <SelectContent>
             {minutes.map((minute) => (
@@ -95,3 +97,5 @@ export const DateTimeInput = ({ formData, onChange }: AppointmentFormProps) => {
     </div>
   );
 };
+
+export default DateTimeInput;
