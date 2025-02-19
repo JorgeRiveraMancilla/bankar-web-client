@@ -41,7 +41,7 @@ export const Modal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[calc(100%-2rem)] max-w-[90%] sm:max-w-[425px] mx-auto my-4">
+      <DialogContent className="max-w-[700px] my-4">
         <DialogHeader>
           <DialogTitle className="text-center">
             {appointment ? "Editar Cita" : "Nueva Cita"}
