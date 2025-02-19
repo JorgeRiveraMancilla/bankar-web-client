@@ -1,11 +1,12 @@
-import { Combobox } from "@/components/Combobox";
+import { Combobox } from "@/components/combobox/Combobox";
 import { stylists } from "@/data/mockData";
-import { AppointmentFormProps } from "@/types/appointment-form";
+import { Stylist, AppointmentFormProps } from "@/types";
 
-export function AppointmentStylist({
-  formData,
-  onChange,
-}: AppointmentFormProps) {
+export const StylistInput = ({ formData, onChange }: AppointmentFormProps) => {
+  const formatStylistDisplay = (stylist: Stylist): string => {
+    return stylist.name;
+  };
+
   return (
     <Combobox
       label="Estilista *"
@@ -13,15 +14,13 @@ export function AppointmentStylist({
       onChange={(value) => onChange("stylistId", value)}
       items={stylists}
       getDisplayValue={(stylist) =>
-        stylist ? `${stylist.name} - ${stylist.specialty}` : ""
+        stylist ? formatStylistDisplay(stylist) : ""
       }
-      getItemDisplayValue={(stylist) =>
-        `${stylist.name} - ${stylist.specialty}`
-      }
+      getItemDisplayValue={formatStylistDisplay}
       getId={(stylist) => stylist.id}
       placeholder="Seleccionar estilista"
       searchPlaceholder="Buscar estilista..."
       emptyMessage="No se encontraron estilistas."
     />
   );
-}
+};

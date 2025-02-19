@@ -14,14 +14,14 @@ import { messages } from "@/config/calendar/messages";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
 import { useCalendarState } from "@/hooks/useCalendarState";
-import { Appointment } from "@/types/appointments";
+import { Appointment } from "@/types";
 
-import { AppointmentModal } from "./AppointmentModal";
-import { CalendarToolbar } from "./CalendarToolbar";
+import { Modal } from "./modal/Modal";
+import { Toolbar } from "./Toolbar";
 
 const DragAndDropCalendar = withDragAndDrop<Appointment>(Calendar);
 
-export default function CalendarWrapper(): JSX.Element {
+export const CalendarWrapper = (): JSX.Element => {
   const { view, date, handleViewChange, handleNavigate } =
     useCalendarNavigation();
 
@@ -71,11 +71,11 @@ export default function CalendarWrapper(): JSX.Element {
         draggableAccessor={() => true}
         resizableAccessor={() => true}
         components={{
-          toolbar: CalendarToolbar,
+          toolbar: Toolbar,
         }}
       />
 
-      <AppointmentModal
+      <Modal
         isOpen={isModalOpen}
         onClose={handleModalClose}
         selectedDate={selectedSlot}
@@ -84,4 +84,4 @@ export default function CalendarWrapper(): JSX.Element {
       />
     </>
   );
-}
+};

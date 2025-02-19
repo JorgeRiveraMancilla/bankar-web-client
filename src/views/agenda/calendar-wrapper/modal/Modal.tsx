@@ -8,13 +8,12 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useAppointmentForm } from "@/hooks/useAppointmentForm";
-import { Appointment } from "@/types/appointments";
+import { Appointment } from "@/types";
 
-import { AppointmentClient } from "./AppointmentClient";
-import { AppointmentDatePicker } from "./AppointmentDatePicker";
-import { AppointmentService } from "./AppointmentService";
-import { AppointmentStylist } from "./AppointmentStylist";
-import { AppointmentTimePicker } from "./AppointmentTimePicker";
+import { ClientInput } from "./ClientInput";
+import { DateTimeInput } from "./DateTimeInput";
+import { ServiceInput } from "./ServiceInput";
+import { StylistInput } from "./StylistInput";
 
 interface Props {
   isOpen: boolean;
@@ -24,13 +23,13 @@ interface Props {
   appointment: Appointment | null;
 }
 
-export function AppointmentModal({
+export const Modal = ({
   isOpen,
   onClose,
   selectedDate,
   onSubmit,
   appointment,
-}: Props): JSX.Element | null {
+}: Props): JSX.Element | null => {
   const { formData, error, handleChange, handleSubmit } = useAppointmentForm(
     selectedDate,
     appointment,
@@ -50,20 +49,17 @@ export function AppointmentModal({
         </DialogHeader>
 
         <div className="py-4 space-y-4">
-          {/* DatePicker */}
-          <AppointmentDatePicker formData={formData} onChange={handleChange} />
-
-          {/* TimePicker */}
-          <AppointmentTimePicker formData={formData} onChange={handleChange} />
+          {/* Date Time */}
+          <DateTimeInput formData={formData} onChange={handleChange} />
 
           {/* Service */}
-          <AppointmentService formData={formData} onChange={handleChange} />
+          <ServiceInput formData={formData} onChange={handleChange} />
 
           {/* Stylist */}
-          <AppointmentStylist formData={formData} onChange={handleChange} />
+          <StylistInput formData={formData} onChange={handleChange} />
 
           {/* Client */}
-          <AppointmentClient formData={formData} onChange={handleChange} />
+          <ClientInput formData={formData} onChange={handleChange} />
         </div>
 
         {error && (
@@ -80,4 +76,4 @@ export function AppointmentModal({
       </DialogContent>
     </Dialog>
   );
-}
+};

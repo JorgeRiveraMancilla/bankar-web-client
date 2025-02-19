@@ -1,11 +1,8 @@
-import { Combobox } from "@/components/Combobox";
+import { Combobox } from "@/components/combobox/Combobox";
 import { clients } from "@/data/mockData";
-import { AppointmentFormProps } from "@/types/appointment-form";
+import { AppointmentFormProps } from "@/types";
 
-export function AppointmentClient({
-  formData,
-  onChange,
-}: AppointmentFormProps) {
+export const ClientInput = ({ formData, onChange }: AppointmentFormProps) => {
   return (
     <Combobox
       label="Cliente *"
@@ -22,4 +19,4 @@ export function AppointmentClient({
       emptyMessage="No se encontraron clientes."
     />
   );
-}
+};
