@@ -21,19 +21,19 @@ export const FloatingEdit = ({
   position,
 }: Props): JSX.Element => {
   const getEventStyle = (color: string) => ({
-    backgroundColor: `${color}26`,
-    color: color,
+    backgroundColor: "white",
+    backgroundImage: `linear-gradient(${color}15, ${color}15)`,
     border: `2px solid ${color}`,
-    borderRadius: "4px",
-    padding: "2px 4px",
+    color: color,
+    width: "100%",
   });
 
   return (
     <div
-      className="fixed bg-white border rounded-lg shadow-lg w-80 z-50 floating-edit mt-4"
+      className="fixed bg-white border rounded-lg shadow-lg w-80 z-50 floating-edit"
       style={{
-        top: position.y + "0px",
-        left: position.x + "px",
+        top: `${position.y}px`,
+        left: `${position.x}px`,
       }}
     >
       <div className="grid gap-4 p-4">
@@ -47,9 +47,37 @@ export const FloatingEdit = ({
           <Label className="text-xs text-muted-foreground mb-2">
             Vista previa del evento
           </Label>
-          <div style={getEventStyle(stylist.color)} className="text-sm mt-1">
-            <div className="font-medium mb-1">10:00 - 10:30</div>
-            <div className="truncate">Corte - {stylist.name}</div>
+
+          <div
+            role="button"
+            tabIndex={0}
+            style={getEventStyle(stylist.color)}
+            className="rbc-event mt-1"
+          >
+            <div className="rbc-addons-dnd-resizable">
+              <div className="rbc-addons-dnd-resize-ns-anchor">
+                <div className="rbc-addons-dnd-resize-ns-icon"></div>
+              </div>
+              <div className="rbc-event-label">10:00 - 10:30</div>
+              <div className="rbc-event-content">
+                <div className="h-full overflow-hidden">
+                  <div className="space-y-0.5">
+                    <div className="text-xs text-muted-foreground truncate">
+                      Corte
+                    </div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      {stylist.name}
+                    </div>
+                    <div className="text-xs text-muted-foreground truncate">
+                      $45.000
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="rbc-addons-dnd-resize-ns-anchor">
+                <div className="rbc-addons-dnd-resize-ns-icon"></div>
+              </div>
+            </div>
           </div>
         </div>
 
