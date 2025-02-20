@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ export const FloatingEdit = ({
   onCancel,
   onChange,
   position,
-}: Props) => {
+}: Props): JSX.Element => {
   const getEventStyle = (color: string) => ({
     backgroundColor: `${color}26`,
     color: color,

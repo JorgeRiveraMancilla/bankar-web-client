@@ -5,3 +5,4 @@ export {
   getAppointmentStyle,
 } from "./calendar";
 export { capitalizeFirst, capitalizeWords } from "./capitalize";
+export { formatPrice } from "./price";

@@ -4,7 +4,7 @@ import { View, Views } from "react-big-calendar";
 
 import { CALENDAR_CONSTANTS } from "@/config/calendar/constants";
 
-export function useCalendarNavigation() {
+export const useCalendarNavigation = () => {
   const [view, setView] = useState<View>(Views.WEEK);
   const [date, setDate] = useState<Date>(new Date());
 
@@ -41,4 +41,4 @@ export function useCalendarNavigation() {
     handleViewChange,
     handleNavigate,
   };
-}
+};

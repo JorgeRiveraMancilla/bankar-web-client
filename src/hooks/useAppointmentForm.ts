@@ -6,12 +6,12 @@ import { services, clients, stylists } from "@/data/mockData";
 import { roundToNearestFiveMinutes } from "@/lib";
 import { Appointment, AppointmentFormData } from "@/types";
 
-export function useAppointmentForm(
+export const useAppointmentForm = (
   selectedDate: Date | null,
   appointment: Appointment | null,
   onSubmit: (appointment: Appointment) => void,
   onClose: () => void
-) {
+) => {
   const [formData, setFormData] = useState<AppointmentFormData>({
     stylistId: "",
     clientId: "",
@@ -107,4 +107,4 @@ export function useAppointmentForm(
     handleChange,
     handleSubmit,
   };
-}
+};

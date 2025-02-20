@@ -5,7 +5,7 @@ interface TimeOption {
   label: string;
 }
 
-export function useTimeOptions() {
+export const useTimeOptions = () => {
   const hours: TimeOption[] = useMemo(
     () =>
       Array.from({ length: 11 }, (_, i) => {
@@ -31,4 +31,4 @@ export function useTimeOptions() {
   );
 
   return { hours, minutes };
-}
+};

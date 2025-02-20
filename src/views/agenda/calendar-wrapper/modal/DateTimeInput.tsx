@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
@@ -23,7 +23,10 @@ import { useTimeOptions } from "@/hooks/useTimeOptions";
 import { cn } from "@/lib";
 import { AppointmentFormProps } from "@/types";
 
-export const DateTimeInput = ({ formData, onChange }: AppointmentFormProps) => {
+export const DateTimeInput = ({
+  formData,
+  onChange,
+}: AppointmentFormProps): JSX.Element => {
   const { hours, minutes } = useTimeOptions();
 
   return (

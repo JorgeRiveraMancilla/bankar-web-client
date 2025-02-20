@@ -1,8 +1,13 @@
+import { JSX } from "react";
+
 import { Combobox } from "@/components/combobox/Combobox";
 import { stylists } from "@/data/mockData";
 import { Stylist, AppointmentFormProps } from "@/types";
 
-export const StylistInput = ({ formData, onChange }: AppointmentFormProps) => {
+export const StylistInput = ({
+  formData,
+  onChange,
+}: AppointmentFormProps): JSX.Element => {
   const formatStylistDisplay = (stylist: Stylist): string => {
     return stylist.name;
   };

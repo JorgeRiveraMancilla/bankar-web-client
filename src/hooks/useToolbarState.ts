@@ -5,7 +5,7 @@ import { View, NavigateAction, ToolbarProps } from "react-big-calendar";
 
 import { Appointment } from "@/types";
 
-export function useToolbarState(props: ToolbarProps<Appointment, object>) {
+export const useToolbarState = (props: ToolbarProps<Appointment, object>) => {
   const { date, onNavigate, onView } = props;
 
   const handleViewChange = useCallback(
@@ -46,4 +46,4 @@ export function useToolbarState(props: ToolbarProps<Appointment, object>) {
     handleViewChange,
     handleNavigate,
   };
-}
+};

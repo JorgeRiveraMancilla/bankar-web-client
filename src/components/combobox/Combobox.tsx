@@ -1,4 +1,4 @@
-import * as React from "react";
+import { JSX, useState } from "react";
 
 import { Check, ChevronsUpDown } from "lucide-react";
 
@@ -32,7 +32,7 @@ interface Props<T> {
   emptyMessage: string;
 }
 
-export function Combobox<T>({
+export const Combobox = <T,>({
   label,
   value,
   onChange,
@@ -43,8 +43,8 @@ export function Combobox<T>({
   placeholder,
   searchPlaceholder,
   emptyMessage,
-}: Props<T>) {
-  const [open, setOpen] = React.useState(false);
+}: Props<T>): JSX.Element => {
+  const [open, setOpen] = useState(false);
   const selectedItem = items.find((item) => getId(item) === value);
 
   return (
@@ -96,4 +96,4 @@ export function Combobox<T>({
       </Popover>
     </div>
   );
-}
+};

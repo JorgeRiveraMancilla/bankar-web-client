@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { JSX, useCallback, useEffect, useState } from "react";
 
 import { Check, ChevronsUpDown, ChevronRight } from "lucide-react";
 
@@ -31,13 +31,13 @@ interface CascaderProps {
   placeholder: string;
 }
 
-export function Cascader({
+export const Cascader = ({
   label,
   value,
   onChange,
   options,
   placeholder,
-}: CascaderProps) {
+}: CascaderProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [levels, setLevels] = useState<CascaderOption[][]>([options]);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
@@ -178,4 +178,4 @@ export function Cascader({
       </Popover>
     </div>
   );
-}
+};

@@ -10,10 +10,10 @@ import {
 } from "@/lib";
 import { Appointment, Stylist } from "@/types";
 
-export function useAppointments(
+export const useAppointments = (
   selectedAppointment: Appointment | null,
   stylists: Stylist[]
-) {
+) => {
   const [appointments, setAppointments] =
     useState<Appointment[]>(mockAppointments);
 
@@ -119,4 +119,4 @@ export function useAppointments(
     deleteAppointment,
     eventPropGetter,
   };
-}
+};

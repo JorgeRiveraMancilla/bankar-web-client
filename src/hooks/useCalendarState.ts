@@ -5,7 +5,7 @@ import { SlotInfo } from "react-big-calendar";
 import { roundToNearestFiveMinutes } from "@/lib";
 import { Appointment } from "@/types";
 
-export function useCalendarState() {
+export const useCalendarState = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedSlot, setSelectedSlot] = useState<Date | null>(null);
   const [selectedAppointment, setSelectedAppointment] =
@@ -37,4 +37,4 @@ export function useCalendarState() {
     handleSelectEvent,
     handleModalClose,
   };
-}
+};

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, JSX } from "react";
 
 import { Edit, Eye, EyeOff } from "lucide-react";
 
@@ -12,7 +12,7 @@ interface Props {
   onStylistUpdate: (updatedStylist: Stylist) => void;
 }
 
-export const Legends = ({ stylists, onStylistUpdate }: Props) => {
+export const Legends = ({ stylists, onStylistUpdate }: Props): JSX.Element => {
   const [localEdits, setLocalEdits] = useState<Record<string, Stylist>>({});
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editPosition, setEditPosition] = useState({ x: 0, y: 0 });

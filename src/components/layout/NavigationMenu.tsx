@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { JSX } from "react";
 
 import {
   LayoutDashboard,
@@ -24,7 +24,7 @@ const navigationItems = [
   { name: "Estilistas", href: "/estilistas", icon: UserCircle },
 ];
 
-export function NavigationMenu() {
+export const NavigationMenu = (): JSX.Element => {
   const pathname = usePathname();
 
   return (
@@ -49,4 +49,4 @@ export function NavigationMenu() {
       })}
     </nav>
   );
-}
+};

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { JSX } from "react";
 
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -12,7 +12,7 @@ interface TopBarProps {
   isMobile: boolean;
 }
 
-export function TopBar({ isMobile }: TopBarProps) {
+export const TopBar = ({ isMobile }: TopBarProps): JSX.Element => {
   return (
     <header className="border-b">
       <div className="flex h-16 items-center px-4 gap-4">
@@ -39,4 +39,4 @@ export function TopBar({ isMobile }: TopBarProps) {
       </div>
     </header>
   );
-}
+};

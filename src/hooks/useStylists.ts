@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { stylists as mockStylists } from "@/data/mockData";
 import { Stylist } from "@/types";
 
-export function useStylists() {
+export const useStylists = () => {
   const [stylists, setStylists] = useState<Stylist[]>(mockStylists);
 
   const handleStylistUpdate = useCallback((updatedStylist: Stylist) => {
@@ -18,4 +18,4 @@ export function useStylists() {
     stylists,
     handleStylistUpdate,
   };
-}
+};

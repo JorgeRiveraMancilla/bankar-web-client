@@ -1,7 +1,8 @@
-import React from "react";
+import React, { JSX } from "react";
 
 import { Cascader, CascaderOption } from "@/components/cascader/Cascader";
 import { categories, services } from "@/data/mockData";
+import { formatPrice } from "@/lib";
 import { AppointmentFormProps, Category, Service } from "@/types";
 
 function buildCascaderOptions(
@@ -55,14 +56,10 @@ function buildCascaderOptions(
   return buildOptions(null);
 }
 
-function formatPrice(price: number): string {
-  return price.toLocaleString("es-CL", {
-    style: "currency",
-    currency: "CLP",
-  });
-}
-
-export const ServiceInput = ({ formData, onChange }: AppointmentFormProps) => {
+export const ServiceInput = ({
+  formData,
+  onChange,
+}: AppointmentFormProps): JSX.Element => {
   const cascaderOptions = React.useMemo(
     () => buildCascaderOptions(categories, services),
     []
