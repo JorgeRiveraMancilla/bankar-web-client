@@ -1,5 +1,3 @@
-"use client";
-
 import { JSX } from "react";
 
 import { Calendar } from "react-big-calendar";
@@ -14,14 +12,19 @@ import { messages } from "@/config/calendar/messages";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
 import { useCalendarState } from "@/hooks/useCalendarState";
-import { Appointment } from "@/types/appointments";
+import { Appointment, Stylist } from "@/types";
 
-import { AppointmentModal } from "./AppointmentModal";
-import { CalendarToolbar } from "./CalendarToolbar";
+import { Event } from "./Event";
+import { Modal } from "./modal/Modal";
+import { Toolbar } from "./Toolbar";
 
 const DragAndDropCalendar = withDragAndDrop<Appointment>(Calendar);
 
-export default function CalendarWrapper(): JSX.Element {
+interface Props {
+  stylists: Stylist[];
+}
+
+export const CalendarWrapper = ({ stylists }: Props): JSX.Element => {
   const { view, date, handleViewChange, handleNavigate } =
     useCalendarNavigation();
 
@@ -39,8 +42,9 @@ export default function CalendarWrapper(): JSX.Element {
     handleEventDrop,
     handleEventResize,
     addOrUpdateAppointment,
+    deleteAppointment,
     eventPropGetter,
-  } = useAppointments(selectedAppointment);
+  } = useAppointments(selectedAppointment, stylists);
 
   return (
     <>
@@ -63,7 +67,7 @@ export default function CalendarWrapper(): JSX.Element {
         max={new Date(0, 0, 0, 19, 0, 0)}
         culture="es"
         formats={customFormats}
-        views={["month", "week", "day", "agenda"]}
+        views={["month", "week", "day"]}
         messages={messages}
         onEventDrop={handleEventDrop}
         onEventResize={handleEventResize}
@@ -71,17 +75,19 @@ export default function CalendarWrapper(): JSX.Element {
         draggableAccessor={() => true}
         resizableAccessor={() => true}
         components={{
-          toolbar: CalendarToolbar,
+          toolbar: Toolbar,
+          event: Event,
         }}
       />
 
-      <AppointmentModal
+      <Modal
         isOpen={isModalOpen}
         onClose={handleModalClose}
         selectedDate={selectedSlot}
         onSubmit={addOrUpdateAppointment}
+        onDelete={deleteAppointment}
         appointment={selectedAppointment}
       />
     </>
   );
-}
+};

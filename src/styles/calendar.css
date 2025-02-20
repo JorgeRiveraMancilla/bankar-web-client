@@ -16,19 +16,45 @@
 
 /*#region Events*/
 .rbc-event {
-  @apply bg-transparent text-foreground rounded shadow-sm cursor-pointer px-2 py-1 text-sm border-0;
+  @apply rounded shadow-sm border cursor-pointer text-sm p-1 overflow-hidden select-none 
+    transition-shadow duration-150 ease-in-out !important;
+}
+
+.rbc-events-container {
+  @apply w-full h-full;
 }
 
 .rbc-event-label {
-  @apply font-medium mb-1;
+  @apply text-xs text-muted-foreground;
 }
 
 .rbc-event-content {
-  @apply text-sm truncate;
+  @apply text-sm leading-tight;
 }
 
 .rbc-selected {
-  @apply bg-accent/5;
+  @apply ring-0 !important;
+}
+
+.rbc-event:hover {
+  @apply shadow-md brightness-[0.98] !important;
+}
+
+.rbc-event:active {
+  @apply shadow-inner brightness-[0.95] !important;
+}
+
+.rbc-event:focus,
+.rbc-event:focus-visible {
+  @apply outline-none ring-0 !important;
+}
+
+.rbc-addons-dnd-resize-ns-anchor {
+  @apply hidden !important;
+}
+
+.rbc-addons-dnd-resize-ns-icon {
+  @apply hidden !important;
 }
 /*#endregion*/
 

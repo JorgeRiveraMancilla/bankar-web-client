@@ -1,41 +1,14 @@
-export interface SlotInfo {
-  start: Date;
-  end: Date;
-  slots: Date[];
-  action: "select" | "click" | "doubleClick";
-}
-
-export interface CalendarEvent {
-  start: Date;
-  end: Date;
-  title: string;
-}
-
-export interface TimeRangeFormat {
-  start: Date;
-  end: Date;
-}
-
-export interface Messages {
-  allDay: string;
-  previous: string;
-  next: string;
-  today: string;
-  month: string;
-  week: string;
-  day: string;
-  agenda: string;
-  date: string;
-  time: string;
-  event: string;
-  noEventsInRange: string;
-  showMore: (total: number) => string;
-}
-
-export interface Stylist {
+export interface BaseAppointment {
   id: string;
-  name: string;
-  specialty: string;
+  title: string;
+  start: Date;
+  end: Date;
+}
+
+export interface Appointment extends BaseAppointment {
+  stylist: Stylist;
+  client: Client;
+  service: Service;
 }
 
 export interface Client {
@@ -45,49 +18,50 @@ export interface Client {
   phone: string;
 }
 
-export interface Service {
-  id: string;
+export interface Category {
+  id: number;
   name: string;
-  duration: number;
-  price: number;
+  parentId: number | null;
+  level: number;
+  slug: string;
+  fullPath: string;
+  isLeaf: boolean;
+  sortOrder: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface Appointment {
+export interface Service {
+  id: number;
+  categoryId: number;
+  duration: number;
+  price: number;
+  isActive: boolean;
+  fullName: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Stylist {
   id: string;
-  title: string;
-  start: Date;
-  end: Date;
+  name: string;
+  color: string;
+  isVisible: boolean;
+}
+
+export interface AppointmentFormData {
   stylistId: string;
   clientId: string;
   serviceId: string;
+  date: Date | undefined;
+  hour: string;
+  minute: string;
 }
 
-export interface EventDropData {
-  event: Appointment;
-  start: Date;
-  end: Date;
-  allDay: boolean;
+export interface AppointmentFormProps {
+  formData: AppointmentFormData;
+  onChange: (
+    field: keyof AppointmentFormData,
+    value: string | Date | undefined
+  ) => void;
 }
-
-export interface EventResizeData {
-  event: Appointment;
-  start: Date;
-  end: Date;
-}
-
-export interface DragAndDropCalendarProps {
-  onEventDrop: (data: EventDropData) => void;
-  onEventResize: (data: EventResizeData) => void;
-}
-
-export type DateAccessor = string | ((event: Appointment) => Date);
-
-export type EventPropGetter = (
-  event: Appointment,
-  start: Date,
-  end: Date,
-  isSelected: boolean
-) => {
-  className?: string;
-  style?: React.CSSProperties;
-};

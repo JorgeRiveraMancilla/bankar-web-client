@@ -1,6 +1,5 @@
 export { cn } from "./tailwind-merge";
 export {
-  stylistColors,
   roundToNearestFiveMinutes,
   checkAppointmentOverlap,
   getAppointmentStyle,
