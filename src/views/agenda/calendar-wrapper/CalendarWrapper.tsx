@@ -1,5 +1,3 @@
-"use client";
-
 import { JSX } from "react";
 
 import { Calendar } from "react-big-calendar";
@@ -14,14 +12,19 @@ import { messages } from "@/config/calendar/messages";
 import { useAppointments } from "@/hooks/useAppointments";
 import { useCalendarNavigation } from "@/hooks/useCalendarNavigation";
 import { useCalendarState } from "@/hooks/useCalendarState";
-import { Appointment } from "@/types";
+import { Appointment, Stylist } from "@/types";
 
+import { Event } from "./Event";
 import { Modal } from "./modal/Modal";
 import { Toolbar } from "./Toolbar";
 
 const DragAndDropCalendar = withDragAndDrop<Appointment>(Calendar);
 
-export const CalendarWrapper = (): JSX.Element => {
+interface Props {
+  stylists: Stylist[];
+}
+
+export const CalendarWrapper = ({ stylists }: Props): JSX.Element => {
   const { view, date, handleViewChange, handleNavigate } =
     useCalendarNavigation();
 
@@ -39,8 +42,9 @@ export const CalendarWrapper = (): JSX.Element => {
     handleEventDrop,
     handleEventResize,
     addOrUpdateAppointment,
+    deleteAppointment,
     eventPropGetter,
-  } = useAppointments(selectedAppointment);
+  } = useAppointments(selectedAppointment, stylists);
 
   return (
     <>
@@ -72,6 +76,7 @@ export const CalendarWrapper = (): JSX.Element => {
         resizableAccessor={() => true}
         components={{
           toolbar: Toolbar,
+          event: Event,
         }}
       />
 
@@ -80,6 +85,7 @@ export const CalendarWrapper = (): JSX.Element => {
         onClose={handleModalClose}
         selectedDate={selectedSlot}
         onSubmit={addOrUpdateAppointment}
+        onDelete={deleteAppointment}
         appointment={selectedAppointment}
       />
     </>
