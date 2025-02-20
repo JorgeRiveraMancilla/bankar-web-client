@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { startOfDay, isToday, isBefore, isAfter } from "date-fns";
 import { View, NavigateAction, ToolbarProps } from "react-big-calendar";
 
-import { Appointment } from "@/types/appointments";
+import { Appointment } from "@/types";
 
 export function useToolbarState(props: ToolbarProps<Appointment, object>) {
   const { date, onNavigate, onView } = props;

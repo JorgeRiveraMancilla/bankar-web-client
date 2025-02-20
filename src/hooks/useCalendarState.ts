@@ -3,7 +3,7 @@ import { useState, useCallback } from "react";
 import { SlotInfo } from "react-big-calendar";
 
 import { roundToNearestFiveMinutes } from "@/lib";
-import { Appointment } from "@/types/appointments";
+import { Appointment } from "@/types";
 
 export function useCalendarState() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

@@ -2,16 +2,15 @@ import { JSX, ReactNode } from "react";
 
 import { ToolbarProps, View } from "react-big-calendar";
 
+import { CalendarView } from "@/config/calendar/constants";
 import { messages } from "@/config/calendar/messages";
 import { useToolbarState } from "@/hooks/useToolbarState";
-import { Appointment } from "@/types/appointments";
-import { CalendarView } from "@/types/calendar";
+import { Appointment } from "@/types";
 
-export function CalendarToolbar(
+export const Toolbar = (
   props: ToolbarProps<Appointment, object>
-): JSX.Element {
+): JSX.Element => {
   const { view, label } = props;
-
   const { getNavigationButtonState, handleViewChange, handleNavigate } =
     useToolbarState(props);
 
@@ -25,9 +24,9 @@ export function CalendarToolbar(
               key={name}
               type="button"
               className={`
-                flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
-                ${view === name ? "bg-background text-foreground shadow" : ""}
-              `}
+                  flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
+                  ${view === name ? "bg-background text-foreground shadow" : ""}
+                `}
               onClick={() => handleViewChange(name as View)}
             >
               {messages[name as keyof typeof messages] as ReactNode}
@@ -43,13 +42,13 @@ export function CalendarToolbar(
             type="button"
             onClick={() => handleNavigate("PREV")}
             className={`
-              flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
-              ${
-                getNavigationButtonState("prev")
-                  ? "bg-background text-foreground shadow"
-                  : ""
-              }
-            `}
+                flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
+                ${
+                  getNavigationButtonState("prev")
+                    ? "bg-background text-foreground shadow"
+                    : ""
+                }
+              `}
           >
             {messages.previous}
           </button>
@@ -58,13 +57,13 @@ export function CalendarToolbar(
             type="button"
             onClick={() => handleNavigate("TODAY")}
             className={`
-              flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
-              ${
-                getNavigationButtonState("today")
-                  ? "bg-background text-foreground shadow"
-                  : ""
-              }
-            `}
+                flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
+                ${
+                  getNavigationButtonState("today")
+                    ? "bg-background text-foreground shadow"
+                    : ""
+                }
+              `}
           >
             {messages.today}
           </button>
@@ -73,13 +72,13 @@ export function CalendarToolbar(
             type="button"
             onClick={() => handleNavigate("NEXT")}
             className={`
-              flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
-              ${
-                getNavigationButtonState("next")
-                  ? "bg-background text-foreground shadow"
-                  : ""
-              }
-            `}
+                flex-1 inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 md:flex-initial
+                ${
+                  getNavigationButtonState("next")
+                    ? "bg-background text-foreground shadow"
+                    : ""
+                }
+              `}
           >
             {messages.next}
           </button>
@@ -94,4 +93,4 @@ export function CalendarToolbar(
       </div>
     </div>
   );
-}
+};

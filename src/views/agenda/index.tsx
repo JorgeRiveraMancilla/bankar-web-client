@@ -1,13 +1,24 @@
+"use client";
+
 import { JSX } from "react";
 
-import CalendarWrapper from "@/components/calendar/CalendarWrapper";
+import { useStylists } from "@/hooks/useStylists";
+
+import { CalendarWrapper } from "./calendar-wrapper/CalendarWrapper";
+import { Legends } from "./legends/Legends";
 
 export const AgendaView = (): JSX.Element => {
+  const { stylists, handleStylistUpdate } = useStylists();
+
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">Calendario</h1>
+      <div className="flex items-center gap-4 mb-4">
+        <h1 className="text-2xl font-bold">Agenda</h1>
 
-      <CalendarWrapper />
+        <Legends stylists={stylists} onStylistUpdate={handleStylistUpdate} />
+      </div>
+
+      <CalendarWrapper stylists={stylists} />
     </>
   );
 };

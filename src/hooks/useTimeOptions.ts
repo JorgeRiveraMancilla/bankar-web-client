@@ -1,6 +1,9 @@
 import { useMemo } from "react";
 
-import { TimeOption } from "@/types/appointment-form";
+interface TimeOption {
+  value: string;
+  label: string;
+}
 
 export function useTimeOptions() {
   const hours: TimeOption[] = useMemo(

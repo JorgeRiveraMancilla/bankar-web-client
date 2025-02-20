@@ -3,8 +3,8 @@ import { JSX } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
-import { SideBar } from "@/components/SideBar";
-import { TopBar } from "@/components/TopBar";
+import { SideBar } from "@/components/layout/SideBar";
+import { TopBar } from "@/components/layout/TopBar";
 
 import type { Metadata } from "next";
 

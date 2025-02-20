@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 
 import { EventInteractionArgs } from "react-big-calendar/lib/addons/dragAndDrop";
 
@@ -8,11 +8,34 @@ import {
   roundToNearestFiveMinutes,
   getAppointmentStyle,
 } from "@/lib";
-import { Appointment } from "@/types/appointments";
+import { Appointment, Stylist } from "@/types";
 
-export function useAppointments(selectedAppointment: Appointment | null) {
+export function useAppointments(
+  selectedAppointment: Appointment | null,
+  stylists: Stylist[]
+) {
   const [appointments, setAppointments] =
     useState<Appointment[]>(mockAppointments);
+
+  const visibleAppointments = useMemo(() => {
+    return appointments.filter((appointment) => {
+      const stylist = stylists.find((s) => s.id === appointment.stylist.id);
+      return stylist?.isVisible ?? false;
+    });
+  }, [appointments, stylists]);
+
+  useEffect(() => {
+    setAppointments((prev) =>
+      prev.map((appointment) => {
+        const updatedStylist = stylists.find(
+          (s) => s.id === appointment.stylist.id
+        );
+        return updatedStylist
+          ? { ...appointment, stylist: updatedStylist }
+          : appointment;
+      })
+    );
+  }, [stylists]);
 
   const handleEventDrop = useCallback(
     ({ event, start, end }: EventInteractionArgs<Appointment>): void => {
@@ -84,11 +107,16 @@ export function useAppointments(selectedAppointment: Appointment | null) {
     []
   );
 
+  const deleteAppointment = useCallback((appointmentId: string): void => {
+    setAppointments((prev) => prev.filter((apt) => apt.id !== appointmentId));
+  }, []);
+
   return {
-    appointments,
+    appointments: visibleAppointments,
     handleEventDrop,
     handleEventResize,
     addOrUpdateAppointment,
+    deleteAppointment,
     eventPropGetter,
   };
 }
