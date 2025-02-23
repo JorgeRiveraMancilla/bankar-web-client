@@ -19,7 +19,7 @@ const navigationItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Agenda", href: "/agenda", icon: Calendar },
   { name: "Productos", href: "/productos", icon: Package },
-  { name: "Servicios", href: "/servicios", icon: Scissors },
+  { name: "Servicios", href: "/services", icon: Scissors },
   { name: "Clientes", href: "/clientes", icon: Users },
   { name: "Estilistas", href: "/estilistas", icon: UserCircle },
 ];
