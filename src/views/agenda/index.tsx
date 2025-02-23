@@ -12,7 +12,7 @@ export const AgendaView = (): JSX.Element => {
 
   return (
     <>
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
         <h1 className="text-2xl font-bold">Agenda</h1>
 
         <Legends stylists={stylists} onStylistUpdate={handleStylistUpdate} />

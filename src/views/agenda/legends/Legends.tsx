@@ -84,58 +84,62 @@ export const Legends = ({ stylists, onStylistUpdate }: Props): JSX.Element => {
   }, [editingId]);
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-fit">
       {stylists.map((stylist) => {
         const currentEdit = localEdits[stylist.id] || stylist;
 
         return (
-          <div key={stylist.id} className="relative">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-md border legend-container">
-              <div
-                className="w-3 h-3 rounded-full"
-                style={{
-                  backgroundColor: currentEdit.color,
-                  opacity: currentEdit.isVisible ? 1 : 0.3,
-                }}
-              />
+          <div key={stylist.id} className="relative w-full">
+            <div className="flex items-center justify-between gap-2 px-3 py-1 rounded-md border legend-container">
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor: currentEdit.color,
+                    opacity: currentEdit.isVisible ? 1 : 0.3,
+                  }}
+                />
 
-              <span
-                className={`text-sm ${
-                  !currentEdit.isVisible && "line-through opacity-50"
-                }`}
-              >
-                {currentEdit.name}
-              </span>
+                <span
+                  className={`text-sm w-full whitespace-nowrap ${
+                    !currentEdit.isVisible && "line-through opacity-50"
+                  }`}
+                >
+                  {currentEdit.name}
+                </span>
+              </div>
 
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleVisibility(stylist);
-                }}
-              >
-                {stylist.isVisible ? (
-                  <Eye className="h-3 w-3" />
-                ) : (
-                  <EyeOff className="h-3 w-3" />
-                )}
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleVisibility(stylist);
+                  }}
+                >
+                  {stylist.isVisible ? (
+                    <Eye className="h-3 w-3" />
+                  ) : (
+                    <EyeOff className="h-3 w-3" />
+                  )}
+                </Button>
 
-              <Button
-                ref={(el) => {
-                  if (el) {
-                    buttonRefs.current.set(stylist.id, el);
-                  }
-                }}
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6 edit-trigger"
-                onClick={(e) => handleEditClick(stylist.id, e)}
-              >
-                <Edit className="h-3 w-3" />
-              </Button>
+                <Button
+                  ref={(el) => {
+                    if (el) {
+                      buttonRefs.current.set(stylist.id, el);
+                    }
+                  }}
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 edit-trigger"
+                  onClick={(e) => handleEditClick(stylist.id, e)}
+                >
+                  <Edit className="h-3 w-3" />
+                </Button>
+              </div>
             </div>
 
             {editingId === stylist.id && (

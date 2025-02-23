@@ -30,7 +30,7 @@ export const FloatingEdit = ({
 
   return (
     <div
-      className="fixed bg-white border rounded-lg shadow-lg w-80 z-50 floating-edit"
+      className="fixed mt-4 bg-white border rounded-lg shadow-lg w-80 z-50 floating-edit"
       style={{
         top: `${position.y}px`,
         left: `${position.x}px`,
